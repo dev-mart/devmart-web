@@ -1,0 +1,11 @@
+.navbarPopupItem {
+  @apply px-4 py-2 w-full rounded-none text-sm flex flex-row items-center gap-2;
+}
+
+.navbarPopupItemBg {
+  @apply text-gray-700 hover:bg-gray-100;
+}
+
+.navbarPopupItemNoBg {
+  @apply text-gray-200 dark:text-gray-800 dark:hover:text-black dark:hover:bg-gray-100 hover:text-white hover:bg-gray-600;
+}

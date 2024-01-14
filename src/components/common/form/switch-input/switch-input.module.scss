@@ -1,0 +1,44 @@
+.slider {
+  @apply absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-400 transition duration-400 rounded-full;
+
+  &:before {
+    @apply absolute h-6 w-6 bg-white bottom-1 left-1 rounded-full transition duration-400;
+    content: "";
+  }
+
+  .small & {
+    &:before {
+      @apply h-3 w-3 bottom-1.5 left-1.5;
+    }
+
+    input:checked + & {
+      &:before {
+        @apply transform translate-x-3;
+      }
+    }
+  }
+
+  input:checked + & {
+    @apply bg-primary;
+
+    &:before {
+      @apply transform translate-x-6;
+    }
+  }
+
+  input:focus + & {
+    @apply shadow shadow-primary;
+  }
+}
+
+.switch {
+  @apply relative inline-block w-16 h-8 mt-0;
+
+  &.small {
+    @apply w-10 h-6;
+  }
+
+  input {
+    @apply opacity-0 w-0 h-0;
+  }
+}

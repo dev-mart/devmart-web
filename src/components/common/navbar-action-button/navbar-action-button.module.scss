@@ -1,0 +1,11 @@
+.navbarActionButton {
+  @apply bg-white text-black text-sm py-3 px-4 rounded-3xl transition-all duration-300 ease-in-out;
+
+  &.buttonFilled {
+    @apply bg-gray-900 dark:bg-white text-white dark:text-gray-900;
+  }
+
+  :hover {
+    background-color: $background-soft-darkened;
+  }
+}

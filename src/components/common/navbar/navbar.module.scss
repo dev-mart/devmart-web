@@ -1,0 +1,7 @@
+.headerLogo {
+   @apply h-10 w-10 fill-white;
+
+  &fillBlack {
+    @apply fill-black;
+  }
+}
