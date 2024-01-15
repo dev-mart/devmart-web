@@ -1,5 +1,5 @@
-import { PageableRestResponse } from '@/models/rest/PageableRestResponse.ts';
-import { PluginUpdate } from '@/models/plugin/PluginUpdate.ts';
+import { PageableRestResponse } from '@/models/rest/PageableRestResponse';
+import { PluginUpdate } from '@/models/plugin/PluginUpdate';
 
 export interface PluginUpdatesResponse extends PageableRestResponse {
 

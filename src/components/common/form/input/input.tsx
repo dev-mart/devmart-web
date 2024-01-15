@@ -4,8 +4,8 @@ import classNames from "classnames";
 
 interface InputProps extends Partial<HTMLInputElement> {
     value: string;
-    onChange?: (value: string) => void;
-    onInput?: (value: string) => void;
+    onChange?: (value: any) => void;
+    onInput?: (value: any) => void;
     errors?: FormErrors;
     item?: string;
     isTextArea?: boolean;
@@ -24,6 +24,15 @@ export const Input: FC<InputProps> = ({
                                           ...props
                                       }) => {
     const hasError = errors && item && errors[item];
+
+    const handleInput = (func: (e: any) => any, e: any) => {
+        if (type === 'file') {
+            func(e.target.files[0]);
+        } else {
+            func(e.target.value);
+        }
+    }
+
     return (
         <>
             {isTextArea ? (
@@ -38,6 +47,7 @@ export const Input: FC<InputProps> = ({
                     value={value}
                     onInput={e => onInput((e.target as any).value)}
                     onChange={e => onChange((e.target as any).value)}
+                    disabled={disabled}
                     {...props}
                 />
             ) : (
@@ -51,9 +61,11 @@ export const Input: FC<InputProps> = ({
                             (`bg-white dark:bg-gray-800 ${type === 'checkbox' ? 'dark:text-blue-600' : 'dark:text-gray-300'}`),
                         className
                     )}
+                    type={type}
+                    disabled={disabled}
                     value={value}
-                    onInput={e => onInput((e.target as any).value)}
-                    onChange={e => onChange((e.target as any).value)}
+                    onInput={e => handleInput(onInput, e)}
+                    onChange={e => handleInput(onChange, e)}
                     {...props}
                 />
             )}

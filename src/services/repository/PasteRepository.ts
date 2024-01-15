@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { PasteListResponse } from '@/models/rest/paste/PasteListResponse.ts';
-import { Paste } from '@/models/paste/Paste.ts';
-import { PasteCreateBody } from '@/models/rest/paste/PasteCreateBody.ts';
-import { API_PASTE_URL } from '@/constants/api.ts';
+import {PasteListResponse} from '@/models/rest/paste/PasteListResponse';
+import {Paste} from '@/models/paste/Paste';
+import {PasteCreateBody} from '@/models/rest/paste/PasteCreateBody';
+import {API_PASTE_URL} from '@/constants/api';
 
 export const client = axios.create({
     baseURL: API_PASTE_URL,

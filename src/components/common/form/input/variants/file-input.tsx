@@ -20,11 +20,12 @@ export const FileInput: FC<FileInputProps> = ({
                                                   item
                                               }) => {
     const hasError = errors && item && errors[item];
+
     return (
         <Input
             value={value}
             accept={accept}
-            onInput={}
+            onInput={(e) => onUpload(e)}
             onChange={onChange}
             errors={errors}
             item={item}

@@ -1,13 +1,13 @@
-import axios, { AxiosResponse } from 'axios';
-import { PluginFilter } from '@/models/rest/plugin/PluginFilter.ts';
-import Plugin from '@/models/plugin/Plugin.ts';
-import { PluginListResponse } from '@/models/rest/plugin/PluginListResponse.ts';
-import { PluginUpdate } from '@/models/plugin/PluginUpdate.ts';
-import { PluginUpdatesResponse } from '@/models/rest/plugin/PluginUpdatesResponse.ts';
-import { PluginPurchasesResponse } from '@/models/rest/plugin/PluginPurchasesResponse.ts';
-import { PluginPurchase } from '@/models/plugin/PluginPurchase.ts';
-import { PluginPermissions } from '@/models/plugin/PluginPermissions.ts';
-import { API_PLUGINS_URL } from '@/constants/api.ts';
+import axios, {AxiosResponse} from 'axios';
+import {PluginFilter} from '@/models/rest/plugin/PluginFilter';
+import Plugin from '@/models/plugin/Plugin';
+import {PluginListResponse} from '@/models/rest/plugin/PluginListResponse';
+import {PluginUpdate} from '@/models/plugin/PluginUpdate';
+import {PluginUpdatesResponse} from '@/models/rest/plugin/PluginUpdatesResponse';
+import {PluginPurchasesResponse} from '@/models/rest/plugin/PluginPurchasesResponse';
+import {PluginPurchase} from '@/models/plugin/PluginPurchase';
+import {PluginPermissions} from '@/models/plugin/PluginPermissions';
+import {API_PLUGINS_URL} from '@/constants/api';
 
 export const client = axios.create({
     baseURL: API_PLUGINS_URL,
@@ -18,7 +18,7 @@ export const client = axios.create({
 });
 
 const loadParams = (user: number | undefined, query: string | undefined, from: Date | undefined, to: Date | undefined, page: number | undefined,
-    perPage: number | undefined, sum: boolean | undefined, compareFrom: Date | undefined = undefined, compareTo: Date | undefined = undefined) => {
+                    perPage: number | undefined, sum: boolean | undefined, compareFrom: Date | undefined = undefined, compareTo: Date | undefined = undefined) => {
     const params = {} as any;
     if (query) {
         params.query = query;
@@ -52,22 +52,22 @@ const loadParams = (user: number | undefined, query: string | undefined, from: D
 
 export default {
     async fetchSales(user: number | undefined = undefined, query: string | undefined = undefined, page: number = 1,
-        from: Date | undefined = undefined, to: Date | undefined = undefined, perPage: number | undefined = undefined,
-        sum: boolean | undefined = undefined): Promise<AxiosResponse> {
+                     from: Date | undefined = undefined, to: Date | undefined = undefined, perPage: number | undefined = undefined,
+                     sum: boolean | undefined = undefined): Promise<AxiosResponse> {
         return await client.get('/sales', {
             params: loadParams(user, query, from, to, page, perPage, sum)
         });
     },
 
     async fetchSalesSum(user: number | undefined = undefined, from: Date | undefined = undefined, to: Date | undefined = undefined,
-        compareFrom: Date | undefined = undefined, compareTo: Date | undefined = undefined): Promise<AxiosResponse> {
+                        compareFrom: Date | undefined = undefined, compareTo: Date | undefined = undefined): Promise<AxiosResponse> {
         return await client.get('/sales', {
             params: loadParams(user, undefined, from, to, undefined, undefined, true, compareFrom, compareTo)
         });
     },
 
     async fetchDailySales(user: number | undefined = undefined, query: string | undefined = undefined, from: Date | undefined = undefined,
-        to: Date | undefined = undefined, records: number | undefined = undefined): Promise<AxiosResponse> {
+                          to: Date | undefined = undefined, records: number | undefined = undefined): Promise<AxiosResponse> {
         return await client.get('/sales/daily', {
             params: loadParams(user, query, from, to, records, undefined, undefined)
         });
@@ -119,7 +119,7 @@ export default {
     },
 
     async fetchPluginPurchases(pluginId: number, page: number = 1, perPage: number = 15, query: number | undefined = undefined,
-        from: Date | undefined = undefined, to: Date | undefined = undefined): Promise<PluginPurchasesResponse> {
+                               from: Date | undefined = undefined, to: Date | undefined = undefined): Promise<PluginPurchasesResponse> {
         const res = await client.get(`/${pluginId}/transactions`, {
             params: {
                 page,
@@ -150,7 +150,7 @@ export default {
     },
 
     async fetchPlugin(pluginId: number, featuresField: boolean = false, saleField: boolean = true, totalDownloadsField: boolean = true,
-        authorNameField: boolean = true): Promise<Plugin> {
+                      authorNameField: boolean = true): Promise<Plugin> {
         const res = await client.get(`/${pluginId}`, {
             params: {
                 featuresField,

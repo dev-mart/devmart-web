@@ -1,3 +1,5 @@
+import {NextRouter} from "next/router";
+
 export default class SidebarItem {
     link: any;
     icon: string;
@@ -15,7 +17,7 @@ export default class SidebarItem {
         this.activeRequirements = activeRequirements;
     }
 
-    static isQueryParam(key: string, value: string): boolean {
-        return useRouter().currentRoute.value.query[key] === value;
+    static isQueryParam(router: NextRouter, key: string, value: string): boolean {
+        return router.query[key] === value;
     }
 }

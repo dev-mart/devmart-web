@@ -1,3 +1,5 @@
+import {NextRouter} from "next/router";
+
 export default class Fetchable {
     query: string;
     page: number;
@@ -5,8 +7,10 @@ export default class Fetchable {
     fetcher: () => Promise<any>;
     lastQuery?: string;
     lastPage?: number;
+    router: NextRouter;
 
-    constructor(fetcher: () => Promise<any>, query: string = '', page: number = 1) {
+    constructor(router: NextRouter, fetcher: () => Promise<any>, query: string = '', page: number = 1) {
+        this.router = router;
         this.fetcher = fetcher;
         this.query = query ?? '';
         this.page = page ?? 1;
@@ -32,10 +36,9 @@ export default class Fetchable {
             return;
         }
 
-        await useRouter().isReady();
-        await useRouter().replace({
+        await this.router.replace({
             query: {
-                ...useRouter().currentRoute.value.query,
+                ...this.router.query,
                 page
             }
         });

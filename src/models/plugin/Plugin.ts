@@ -1,6 +1,6 @@
-import { PluginUpdate } from '@/models/plugin/PluginUpdate.ts';
-import { PluginSale } from '@/models/plugin/PluginSale.ts';
-import DateService from '@/services/DateService.ts';
+import {PluginUpdate} from '@/models/plugin/PluginUpdate';
+import {PluginSale} from '@/models/plugin/PluginSale';
+import DateService from '@/services/DateService';
 
 export default class Plugin {
     id: number;

@@ -1,5 +1,5 @@
-import { AccountTheme } from './AccountTheme.ts';
-import { UserRole } from '@/models/user/UserRole.ts';
+import {AccountTheme} from './AccountTheme';
+import {UserRole} from '@/models/user/UserRole';
 
 export class User {
     id?: number;

@@ -1,10 +1,10 @@
 import axios from 'axios/index';
-import { AxiosResponse } from 'axios';
-import { API_BASE_URL, API_USERS_URL } from '@/constants/api.ts';
-import { User } from '@/models/user/User.ts';
-import { UserListResponse } from '@/models/rest/user/UserListResponse.ts';
-import { UserPaypalInformation } from '@/models/rest/user/UserPaypalInformation.ts';
-import { UserDiscordInformation } from '@/models/rest/user/UserDiscordInformation.ts';
+import {AxiosResponse} from 'axios';
+import {API_BASE_URL, API_USERS_URL} from '@/constants/api';
+import {User} from '@/models/user/User';
+import {UserListResponse} from '@/models/rest/user/UserListResponse';
+import {UserPaypalInformation} from '@/models/rest/user/UserPaypalInformation';
+import {UserDiscordInformation} from '@/models/rest/user/UserDiscordInformation';
 
 export const client = axios.create({
     baseURL: API_USERS_URL,

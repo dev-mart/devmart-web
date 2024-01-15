@@ -1,4 +1,4 @@
-import { RouteLocation } from 'vue-router';
+import {NextRouter} from "next/router";
 
 export default {
 
@@ -47,9 +47,11 @@ export default {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     },
 
-    getWikiSidebarItemName(route: RouteLocation) {
-        const name = route.path.split('/').pop()?.replaceAll(/[-.]/g, ' ');
-        return route.meta?.name ?? (name === '' ? 'Introduction' : name);
+    getWikiSidebarItemName(router: NextRouter) {
+        const name = router.pathname.split('/').pop()?.replaceAll(/[-.]/g, ' ');
+
+        // todo add option to provide custom display name through context/props.
+        return (!name || name === '' ? 'Introduction' : name);
     }
 
 };

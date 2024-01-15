@@ -1,5 +1,5 @@
-import { PageableRestResponse } from '@/models/rest/PageableRestResponse.ts';
-import User from '@/models/user/User.ts';
+import {PageableRestResponse} from '@/models/rest/PageableRestResponse';
+import {User} from '@/models/user/User';
 
 export interface UserListResponse extends PageableRestResponse {
 
