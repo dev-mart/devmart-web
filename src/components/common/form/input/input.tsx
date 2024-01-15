@@ -3,7 +3,7 @@ import {FormErrors} from "@/interfaces/FormErrors";
 import classNames from "classnames";
 
 interface InputProps extends Partial<HTMLInputElement> {
-    value: string;
+    value?: string;
     onChange?: (value: any) => void;
     onInput?: (value: any) => void;
     errors?: FormErrors;
@@ -12,7 +12,7 @@ interface InputProps extends Partial<HTMLInputElement> {
 }
 
 export const Input: FC<InputProps> = ({
-                                          value,
+                                          value = undefined,
                                           onChange = () => null,
                                           onInput = () => null,
                                           errors = {},
@@ -28,6 +28,8 @@ export const Input: FC<InputProps> = ({
     const handleInput = (func: (e: any) => any, e: any) => {
         if (type === 'file') {
             func(e.target.files[0]);
+        } else if (type === 'checkbox') {
+            func(e.target.checked);
         } else {
             func(e.target.value);
         }
@@ -63,6 +65,7 @@ export const Input: FC<InputProps> = ({
                     )}
                     type={type}
                     disabled={disabled}
+                    checked={type === 'checkbox' && value == '1'}
                     value={value}
                     onInput={e => handleInput(onInput, e)}
                     onChange={e => handleInput(onChange, e)}

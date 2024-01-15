@@ -9,7 +9,7 @@ interface ValidationErrorProps {
 export const ValidationError: FC<ValidationErrorProps> = ({errors, item}) => {
     if (item in errors) {
         return (
-            <div className="text-red-400 text-md mt-1">
+            <div className="text-red-500 text-md mt-1">
                 {errors[item][0]}
             </div>
         );

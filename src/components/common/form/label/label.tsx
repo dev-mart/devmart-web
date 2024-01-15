@@ -1,14 +1,15 @@
 import React, {FC} from 'react';
 
-interface LabelProps {
-    value?: string;
-    children?: React.ReactNode;
+interface LabelProps extends Partial<HTMLLabelElement> {
+    label: string;
 }
 
-export const Label: FC<LabelProps> = ({value, children}) => {
+export const Label: FC<LabelProps> = ({
+                                          label,
+                                      }) => {
     return (
         <label className="block font-medium text-sm text-gray-700 dark:text-gray-400">
-            {value ? value : children}
+            {label}
         </label>
     )
 }

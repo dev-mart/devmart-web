@@ -1,9 +1,11 @@
+"use client"
+
 import React, {FC, useEffect, useState} from 'react';
 import Link from "next/link";
 import classNames from "classnames";
 import {NavbarPopupItem} from "@/components/common/navbar-popup-item/navbar-popup-item";
 import {useAuth} from "@/store/auth-context";
-import {useRouter} from "next/router";
+import {usePathname} from "next/navigation";
 
 interface NavbarActionButtonProps {
     background?: boolean;
@@ -12,13 +14,13 @@ interface NavbarActionButtonProps {
 export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = false}) => {
     const {applyTheme, logout, user} = useAuth();
     const [darkMode, setDarkMode] = useState(false);
-    const router = useRouter();
+    const pathname = usePathname();
 
     const loginLink = () => {
         return {
             pathname: '/login',
             query: {
-                redirect: router.asPath
+                redirect: pathname
             }
         }
     }
@@ -28,7 +30,7 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
     }
 
     const classes = classNames(
-        'text-sm py-3 px-5 transition duration-300 ease-in-out hover:bg-[var(--background-soft-darkened)] cursor-pointer relative',
+        'text-sm py-2 px-4 transition hover:bg-zinc-200 cursor-pointer relative rounded-full plain',
         background ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-900' : 'bg-white text-black'
     );
 

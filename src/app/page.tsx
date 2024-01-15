@@ -3,7 +3,9 @@ import {LandingPage} from "@/components/landing-page/landing-page";
 
 const Home: NextPage = () => {
     return (
-        <LandingPage />
+        <div className="font-poppins h-full w-full">
+            <LandingPage/>
+        </div>
     );
 }
 

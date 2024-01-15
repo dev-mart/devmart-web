@@ -3,11 +3,9 @@ import {LandingHeading} from "@/components/landing-page/landing-heading/landing-
 
 export const LandingPage: FC = () => {
     return (
-        <div className="font-poppins h-full w-full">
-            <LandingHeading
-                title="Devmart"
-                subtitle=" Minecraft plugins, web, builds, and more."
-            />
-        </div>
+        <LandingHeading
+            title="Devmart"
+            subtitle=" Minecraft plugins, web, builds, and more."
+        />
     )
 }
