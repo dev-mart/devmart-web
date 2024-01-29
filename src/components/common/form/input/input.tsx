@@ -1,4 +1,4 @@
-import React, {FC, HTMLInputTypeAttribute} from 'react';
+import React, {FC} from 'react';
 import {FormErrors} from "@/interfaces/FormErrors";
 import classNames from "classnames";
 
@@ -73,6 +73,5 @@ export const Input: FC<InputProps> = ({
                 />
             )}
         </>
-    )
-        ;
+    );
 };
