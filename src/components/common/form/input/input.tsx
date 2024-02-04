@@ -1,77 +1,94 @@
-import React, {FC} from 'react';
-import {FormErrors} from "@/interfaces/FormErrors";
+import {InputProps, InputValidationState} from "@/components/common/form/input/input.interface";
+import React from "react";
+import {isMobile} from "@/helpers/general.helper";
 import classNames from "classnames";
+import {ValidationError} from "@/components/common/form/validation-error/validation-error";
+import {Label} from "@/components/common/form/label/label";
 
-interface InputProps extends Partial<HTMLInputElement> {
-    value?: string;
-    onChange?: (value: any) => void;
-    onInput?: (value: any) => void;
-    errors?: FormErrors;
-    item?: string;
-    isTextArea?: boolean;
-}
+export class Input extends React.PureComponent<InputProps> {
 
-export const Input: FC<InputProps> = ({
-                                          value = undefined,
-                                          onChange = () => null,
-                                          onInput = () => null,
-                                          errors = {},
-                                          item = '',
-                                          isTextArea = false,
-                                          type,
-                                          className,
-                                          disabled,
-                                          ...props
-                                      }) => {
-    const hasError = errors && item && errors[item];
+    input: React.RefObject<HTMLInputElement> = this.props.forwardedRef || React.createRef();
 
-    const handleInput = (func: (e: any) => any, e: any) => {
-        if (type === 'file') {
-            func(e.target.files[0]);
-        } else if (type === 'checkbox') {
-            func(e.target.checked);
-        } else {
-            func(e.target.value);
+    componentDidMount() {
+        const {focus} = this.props;
+        if (this.input.current && focus && !isMobile()) {
+            this.input.current.focus();
         }
     }
 
-    return (
-        <>
-            {isTextArea ? (
-                // @ts-ignore
-                <textarea
-                    className={classNames(
-                        "rounded-md shadow-sm focus:ring focus:ring-opacity-50 checked:bg-blue-600 w-full  dark:text-gray-300 dark:bg-gray-800 dark:border-gray-700",
-                        hasError ? 'border-red-300 focus:border-red-300 focus:ring-red-200' : 'border-gray-300 focus:border-indigo-300 focus:ring-indigo-200',
-                        type === 'checkbox' && 'p-2.5 rounded-md',
-                        className
-                    )}
-                    value={value}
-                    onInput={e => onInput((e.target as any).value)}
-                    onChange={e => onChange((e.target as any).value)}
-                    disabled={disabled}
-                    {...props}
-                />
-            ) : (
-                // @ts-ignore
+    handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const {onChange, onValueChanged, name} = this.props;
+        const {value} = event.target;
+
+        if (onChange) {
+            onChange(event);
+        }
+
+        if (onValueChanged) {
+            onValueChanged({name, value});
+        }
+    }
+
+    getClassNames = (): string => {
+        const {disabled, validationState, type, className} = this.props;
+
+        return classNames(
+            "!rounded-md shadow-sm dark:!shadow-gray-700 focus:ring dark:border-gray-700 focus:ring-opacity-50 w-full mt-1",
+            validationState === InputValidationState.INVALID && 'border-red-300 focus:border-red-300 focus:ring-red-200',
+            validationState === InputValidationState.UNDETERMINED && 'border-gray-300 dark:border-gray-700 focus:border-indigo-300 dark:ring-offset-gray-700 focus:ring-indigo-200',
+            validationState === InputValidationState.VALID && 'border-green-300 focus:border-green-300 focus:ring-green-200',
+            disabled ? 'bg-gray-100 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600' : 'bg-white dark:bg-gray-800 dark:text-gray-300',
+            className
+        );
+    }
+
+    render = () => {
+        const {
+            type,
+            placeholder,
+            name,
+            disabled,
+            className,
+            focus,
+            onChange,
+            containerClassName,
+            onValueChanged,
+            validationState,
+            errorMessage,
+            children,
+            forwardedRef,
+            value,
+            autoComplete,
+            label,
+            ...restProps
+        } = this.props;
+
+        return (
+            <div className={classNames('relative', containerClassName)}>
+                {label && (
+                    <Label htmlFor={name} label={label}/>
+                )}
+
                 <input
-                    className={classNames(
-                        "!rounded-md shadow-sm dark:!shadow-gray-700 focus:ring dark:border-gray-700 focus:ring-opacity-50",
-                        hasError ? 'border-red-300 focus:border-red-300 focus:ring-red-200' : 'border-gray-300 dark:border-gray-700 focus:border-indigo-300 dark:ring-offset-gray-700 focus:ring-indigo-200',
-                        type === 'checkbox' && 'p-2.5 rounded-md',
-                        disabled ? 'bg-gray-100 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600' :
-                            (`bg-white dark:bg-gray-800 ${type === 'checkbox' ? 'dark:text-blue-600' : 'dark:text-gray-300'}`),
-                        className
-                    )}
+                    className={this.getClassNames()}
                     type={type}
+                    placeholder={placeholder}
+                    onChange={this.handleChange}
+                    name={name}
+                    id={name}
                     disabled={disabled}
-                    checked={type === 'checkbox' && value == '1'}
+                    ref={this.input}
                     value={value}
-                    onInput={e => handleInput(onInput, e)}
-                    onChange={e => handleInput(onChange, e)}
-                    {...props}
+                    autoComplete={autoComplete}
+                    {...restProps}
                 />
-            )}
-        </>
-    );
-};
+
+                {children}
+
+                {validationState === InputValidationState.INVALID && errorMessage && (
+                    <ValidationError message={errorMessage}/>
+                )}
+            </div>
+        )
+    }
+}

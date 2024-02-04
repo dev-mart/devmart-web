@@ -1,56 +1,57 @@
 "use client"
 
-import React, {useState} from 'react';
+import React from 'react';
 import {DiscordAuthButton} from "@/components/common/discord-auth-button/discord-auth-button";
 import {ValidationError} from "@/components/common/form/validation-error/validation-error";
-import {Label} from "@/components/common/form/label/label";
-import {Input} from "@/components/common/form/input/input";
 import Link from "next/link";
 import {Button} from "@/components/common/button/button";
 import {AuthCard} from '@/components/common/auth-card/auth-card';
-import {useRouter} from "next/navigation";
-import AuthService from "@/services/AuthService";
+import {useForm} from "@/store/hooks/form/store.hooks";
+import * as Validation from "@/helpers/validation.helper";
+import {LoginFormRow} from "@/components/common/form-rows/login-form-row/login-form-row";
+import {FieldsManager} from "@/store/hooks/fields-manager/fields-manager.interface";
+import {LoginFieldName} from "@/components/common/form-rows/login-form-row/login-form.row.enums";
+import {useLoginFormSubmitMiddleware} from "@/components/common/form-rows/login-form-row/login-form-submit-middleware.hook";
+import { FormWrapper } from '@/components/common/form-wrapper/form-wrapper';
 
 export default function LoginPage({
                                       searchParams
                                   }: {
     searchParams: { [key: string]: string | string[] | undefined }
 }) {
-    const [error, setError] = useState<string | undefined>();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const router = useRouter();
+    const {error, afterSubmitMiddleware} = useLoginFormSubmitMiddleware(searchParams['redirect'] as string);
 
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (loading) return;
-
-        setLoading(true);
-        setError(undefined);
-
-        try {
-            const response = await AuthService.login({
-                username,
-                password,
-            });
-
-            if (response.status === 200) {
-                router.push(searchParams['redirect'] as string || '/');
-            } else {
-                setError(response.data.message || 'Something went wrong. Please try again later.');
+    const {
+        fm,
+        eventHandlers: {handleChange, handleBlur, handleSubmit},
+    } = useForm(
+        [LoginFieldName.username, LoginFieldName.password],
+        {
+            [LoginFieldName.username]: {
+                rules: [
+                    {
+                        error: 'Username is required',
+                        validator: Validation.hasValue
+                    }
+                ],
+            },
+            [LoginFieldName.password]: {
+                rules: [
+                    {
+                        error: 'Password is required',
+                        validator: Validation.hasValue
+                    }
+                ],
             }
-        } catch (e) {
-            setError('Something went wrong. Please try again later.');
-        } finally {
-            setLoading(false);
+        },
+        {
+            afterSubmitMiddleware
         }
-    }
+    );
 
     return (
         <AuthCard title="Login." subtitle="Hi, welcome back 👋">
-            <form onSubmit={onSubmit}>
+            <FormWrapper onSubmit={handleSubmit}>
                 <DiscordAuthButton
                     label="Login with Discord"
                     href="/api/auth/discord/login"
@@ -58,50 +59,28 @@ export default function LoginPage({
 
                 <hr/>
 
-                <div className="mt-4">
-                    <Label htmlFor="username" label="Username or Email"/>
-                    <Input
-                        id="username"
-                        value={username}
-                        onInput={setUsername}
-                        className="block mt-1 w-full"
-                        placeholder="Username"
-                        autocomplete="username"
-                        required
-                        type="text"
-                    />
-                </div>
+                <LoginFormRow
+                    fm={fm as FieldsManager<LoginFieldName>}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                />
 
-                <div className="mt-2">
-                    <Label htmlFor="password" label="Password"/>
-                    <Input
-                        id="password"
-                        value={password}
-                        onInput={setPassword}
-                        className="block mt-1 w-full"
-                        placeholder="Password"
-                        required
-                        type="password"
-                        autocomplete="current-password"
-                    />
-                </div>
-
-                {error && <ValidationError message={error}/>}
+                {error && <ValidationError message={error.message}/>}
 
                 <div className="flex flex-row mt-2 center justify-between">
                     <Link className="underline text-sm" href="/reset-password">Forgot your password?</Link>
                 </div>
 
                 <div className="flex flex-col items-center justify-end mt-4">
-                    <Button disabled={loading}>
-                        {loading ? 'Logging you in...' : 'Log in'}
+                    <Button disabled={!fm.isSubmittable} type="submit">
+                        {fm.hasBeenSubmitted ? 'Logging you in...' : 'Log in'}
                     </Button>
                 </div>
                 <div className="mt-4 text-center flex gap-2 justify-center items-center">
                     No account yet?
                     <Link href="/register">Sign up Now!</Link>
                 </div>
-            </form>
+            </FormWrapper>
         </AuthCard>
     );
 }
