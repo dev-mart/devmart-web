@@ -1,7 +1,9 @@
 import React from "react";
 import '@/styles/globals.scss';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import { config } from "@fortawesome/fontawesome-svg-core";
+import {config} from "@fortawesome/fontawesome-svg-core";
+import {SessionProvider} from "next-auth/react";
+
 config.autoAddCss = false;
 
 export default function AuthPageLayout({
@@ -21,7 +23,9 @@ export default function AuthPageLayout({
             <script src="https://kit.fontawesome.com/29a1d6d28e.js" crossOrigin="anonymous"></script>
         </head>
         <body className="h-screen">
-        {children}
+        <SessionProvider>
+            {children}
+        </SessionProvider>
         </body>
         </html>
     );

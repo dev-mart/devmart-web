@@ -12,14 +12,19 @@ import {LoginFormRow} from "@/components/common/form-rows/login-form-row/login-f
 import {FieldsManager} from "@/store/hooks/fields-manager/fields-manager.interface";
 import {LoginFieldName} from "@/components/common/form-rows/login-form-row/login-form.row.enums";
 import {useLoginFormSubmitMiddleware} from "@/components/common/form-rows/login-form-row/login-form-submit-middleware.hook";
-import { FormWrapper } from '@/components/common/form-wrapper/form-wrapper';
+import {FormWrapper} from '@/components/common/form-wrapper/form-wrapper';
+import {authenticate} from "@/actions/auth.actions";
+import {useFormState} from 'react-dom';
 
 export default function LoginPage({
                                       searchParams
                                   }: {
     searchParams: { [key: string]: string | string[] | undefined }
 }) {
-    const {error, afterSubmitMiddleware} = useLoginFormSubmitMiddleware(searchParams['redirect'] as string);
+    const authenticateCallback = authenticate.bind(null, searchParams['redirect'] as string);
+    const [errorMessage, dispatch] = useFormState(authenticateCallback, undefined);
+
+    // const {error, afterSubmitMiddleware} = useLoginFormSubmitMiddleware(searchParams['redirect'] as string);
 
     const {
         fm,
@@ -44,14 +49,12 @@ export default function LoginPage({
                 ],
             }
         },
-        {
-            afterSubmitMiddleware
-        }
+        {}
     );
 
     return (
         <AuthCard title="Login." subtitle="Hi, welcome back 👋">
-            <FormWrapper onSubmit={handleSubmit}>
+            <FormWrapper actionUrl={dispatch}>
                 <DiscordAuthButton
                     label="Login with Discord"
                     href="/api/auth/discord/login"
@@ -65,7 +68,7 @@ export default function LoginPage({
                     onBlur={handleBlur}
                 />
 
-                {error && <ValidationError message={error.message}/>}
+                {errorMessage && <ValidationError message={errorMessage}/>}
 
                 <div className="flex flex-row mt-2 center justify-between">
                     <Link className="underline text-sm" href="/reset-password">Forgot your password?</Link>

@@ -103,7 +103,7 @@ export type FormHooksSubmitMiddleware<FieldName extends string> = (
 export type FormHooksMiddlewares<FieldName extends string> = {
     afterChangeMiddleware?: FormHooksAfterChangeMiddleware<FieldName>;
     afterBlurMiddleware?: FormHooksAfterChangeMiddleware<FieldName>;
-    afterSubmitMiddleware: FormHooksSubmitMiddleware<FieldName>;
+    afterSubmitMiddleware?: FormHooksSubmitMiddleware<FieldName>;
 };
 
 export type FormHook<FieldName extends string> = {

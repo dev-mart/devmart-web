@@ -18,8 +18,8 @@ export const Button: FC<ButtonProps> = ({
     return (
         // TODO add theme css
         <button
-            className={classNames(className, 'flex flex-row items-center justify-center text-base w-full font-semibold py-2 px-4 rounded-md',
-                theme === 'primary' && 'bg-primary text-white')}
+            className={classNames(className, 'flex flex-row items-center justify-center text-base w-full font-semibold py-2 px-4 rounded-md transition',
+                theme === 'primary' && 'bg-primary text-white hover:bg-primary-600')}
             onClick={onClick}
             {...props}
         >

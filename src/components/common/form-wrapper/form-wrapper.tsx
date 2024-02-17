@@ -1,9 +1,9 @@
 import React, {FC} from "react";
 
 interface FormWrapperProps {
-    onSubmit: () => void;
+    onSubmit?: () => void;
     className?: string;
-    actionUrl?: string;
+    actionUrl?: (formData: FormData) => void | string;
     children: React.ReactNode;
 }
 
@@ -14,6 +14,9 @@ export const FormWrapper: FC<FormWrapperProps> = ({
                                                       children
                                                   }) => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        if (!onSubmit || (actionUrl && typeof actionUrl === 'function')) {
+            return;
+        }
         event.preventDefault();
         onSubmit();
     }
@@ -24,10 +27,10 @@ export const FormWrapper: FC<FormWrapperProps> = ({
             onSubmit={handleSubmit}
             autoComplete="off"
             noValidate
-            method="post"
+            method={actionUrl ? undefined : 'post'}
             action={actionUrl || '#'}
         >
             {children}
         </form>
-    )
+    );
 }

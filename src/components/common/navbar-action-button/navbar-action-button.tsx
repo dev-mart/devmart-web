@@ -1,32 +1,25 @@
-"use client"
-
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC} from 'react';
 import Link from "next/link";
 import classNames from "classnames";
 import {NavbarPopupItem} from "@/components/common/navbar-popup-item/navbar-popup-item";
-import {useAuth} from "@/store/auth-context";
-import {usePathname} from "next/navigation";
+import {ThemeNavbarPopupItem} from '../navbar-popup-item/theme-navbar-popup-item';
+import {auth} from "@/services/auth.service";
 
 interface NavbarActionButtonProps {
+    pathName?: string;
     background?: boolean;
 }
 
-export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = false}) => {
-    const {applyTheme, logout, user} = useAuth();
-    const [darkMode, setDarkMode] = useState(false);
-    const pathname = usePathname();
+export const NavbarActionButton: FC<NavbarActionButtonProps> = async ({background = false, pathName}) => {
+    let session = await auth();
 
     const loginLink = () => {
         return {
             pathname: '/login',
             query: {
-                redirect: pathname
+                redirect: pathName
             }
         }
-    }
-
-    const switchTheme = () => {
-        document.documentElement.classList.toggle('dark');
     }
 
     const classes = classNames(
@@ -34,14 +27,9 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
         background ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-900' : 'bg-white text-black'
     );
 
-    useEffect(() => {
-        applyTheme();
-        setDarkMode(document.documentElement.classList.contains('dark'));
-    }, [applyTheme]);
-
     return (
         <div className="w-56 flex first:justify-start last:justify-end">
-            {user ? (
+            {session ? (
                 <>
                     <div
                         id="user-menu-button"
@@ -64,18 +52,13 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
                                 "block text-sm",
                                 background ? "text-gray-100 dark:text-black" : "text-gray-900"
                             )}>
-                                Hi, {user.username} 👋
+                                Hi, {session.user.username}! 👋
                             </span>
                         </div>
 
                         <ul aria-labelledby="user-menu-button" className="py-2">
                             <li>
-                                <NavbarPopupItem
-                                    background={background}
-                                    icon={darkMode ? 'lightbulb' : 'moon'}
-                                    label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-                                    onClick={switchTheme}
-                                />
+                                <ThemeNavbarPopupItem/>
                             </li>
                             <li>
                                 <NavbarPopupItem
@@ -91,7 +74,7 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
                                     background={background}
                                     icon="right-from-bracket"
                                     label="Sign out"
-                                    onClick={logout}
+                                    // TODO: add signout action
                                 />
                             </li>
                         </ul>
