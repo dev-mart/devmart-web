@@ -19,7 +19,8 @@ const minLength = (length: number) => (value: string): boolean => {
  * @param length Length to be at most
  */
 const maxLength = (length: number) => (value: string): boolean => {
-    return (value || '').trim().length <= length;
+    let trim = (value || '').trim();
+    return trim.length > 0 && trim.length <= length;
 }
 
 /**

@@ -4,9 +4,10 @@ import {InputValidationState} from "@/components/common/form/input/input.interfa
 export interface FieldConstraintRule {
     error: string;
     validator: (value: string) => boolean;
+    description?: string;
 }
 
-type FieldConstraint<FieldName extends string> = {
+export type FieldConstraint<FieldName extends string> = {
     rules: FieldConstraintRule[];
     optional?: boolean,
     options?: {
@@ -47,6 +48,7 @@ export type FieldsManager<FieldName extends string> = {
     getOptions: (name: FieldName) => Option[] | null;
 
     fields: FieldName[];
+    constraints: Constraints<FieldName>;
     values: Values<FieldName>;
     isSubmittable: boolean;
     hasBeenSubmitted: boolean;

@@ -1,6 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, {AxiosError, AxiosResponse} from 'axios';
 import { LoginBody } from '@/interfaces/LoginBody';
 import { API_AUTH_URL, API_BASE_URL } from '@/constants/api';
+import {RegisterBody} from "@/interfaces/RegisterBody";
 
 export const authClient = axios.create();
 
@@ -14,7 +15,7 @@ export default {
     getAuthUser() {
         return authClient.get(`${API_BASE_URL}/user`);
     },
-    async registerUser(payload: any, discordAuthToken: string) {
+    async registerUser(payload: RegisterBody, discordAuthToken?: string) {
         return authClient.post(`${API_AUTH_URL}/register${discordAuthToken ? `?discord_auth_token=${discordAuthToken}` : ''}`, payload);
     }
 };

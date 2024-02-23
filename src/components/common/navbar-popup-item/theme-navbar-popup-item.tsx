@@ -2,6 +2,7 @@
 
 import React, {FC, useState} from "react";
 import {NavbarPopupItem} from "@/components/common/navbar-popup-item/navbar-popup-item";
+import { faMoon, faLightbulb } from "@fortawesome/free-regular-svg-icons";
 
 interface ThemeNavbarPopupItemProps {
     background?: boolean;
@@ -20,7 +21,7 @@ export const ThemeNavbarPopupItem: FC<ThemeNavbarPopupItemProps> = ({
     return (
         <NavbarPopupItem
             background={background}
-            icon={darkMode ? 'lightbulb' : 'moon'}
+            icon={darkMode ? faLightbulb : faMoon}
             label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             onClick={switchTheme}
         />

@@ -61,6 +61,7 @@ export function createFieldsManager<FieldName extends string>(
         getOptions,
 
         fields,
+        constraints,
         values,
         isSubmittable,
         hasBeenSubmitted,

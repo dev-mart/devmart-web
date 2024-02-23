@@ -20,4 +20,6 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
     value?: string;
     defaultValue?: string | number | string[] | undefined;
     label?: string;
+    inputContainerClassName?: string,
+    inputContainerChildren?: React.ReactNode;
 }

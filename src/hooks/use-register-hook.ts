@@ -2,23 +2,28 @@ import {useState} from "react";
 import {useRouter} from "next/navigation";
 import AuthService from "@/services/AuthService";
 import {Values} from "@/store/hooks/form/store.interface";
-import {LoginFieldName} from "@/components/common/form-rows/login-form-row/login-form.row.enums";
 import {AxiosError} from "axios";
+import {RegisterFieldName} from "@/components/common/form-rows/register-form-row/register-form-row.enums";
 
-export const useLoginHook = () => {
+export const useRegisterHook = () => {
+    console.log('yeeehaw')
     const [error, setError] = useState<string | undefined>();
     const router = useRouter();
 
-    const login = async (values: Values<LoginFieldName>, redirect?: string) => {
+    const register = async (values: Values<RegisterFieldName>, redirect?: string) => {
+        console.log('registering')
         try {
-            const {username, password} = values;
+            const {username, email, password} = values;
 
-            const response = await AuthService.login({
+            const response = await AuthService.registerUser({
                 username,
+                email,
                 password,
             });
 
-            if (response.status === 200) {
+            console.log(response)
+
+            if (response.status === 201) {
                 router.push(redirect || '/');
             }
             return;
@@ -27,12 +32,13 @@ export const useLoginHook = () => {
                 setError(e?.response?.data?.message);
                 return;
             }
+            console.error(e);
         }
         setError('Something went wrong. Please try again later.')
     };
 
     return {
-        login,
+        register,
         error,
     };
 };

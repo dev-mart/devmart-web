@@ -1,17 +1,21 @@
-import React, {FC} from 'react';
+"use client";
+
+import React, {FC, useEffect} from 'react';
 import Link from "next/link";
 import classNames from "classnames";
 import {NavbarPopupItem} from "@/components/common/navbar-popup-item/navbar-popup-item";
 import {ThemeNavbarPopupItem} from '../navbar-popup-item/theme-navbar-popup-item';
-import {auth} from "@/services/auth.service";
+import {initDropdowns} from "flowbite";
+import {faGear, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 
 interface NavbarActionButtonProps {
     pathName?: string;
     background?: boolean;
 }
 
-export const NavbarActionButton: FC<NavbarActionButtonProps> = async ({background = false, pathName}) => {
-    let session = await auth();
+export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = false, pathName}) => {
+    // let {data: session} = useSession();
+    const session = {user: {username: 'test'}};
 
     const loginLink = () => {
         return {
@@ -26,6 +30,10 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = async ({backgroun
         'text-sm py-2 px-4 transition hover:bg-zinc-200 cursor-pointer relative rounded-full plain',
         background ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-900' : 'bg-white text-black'
     );
+
+    useEffect(() => {
+       initDropdowns();
+    });
 
     return (
         <div className="w-56 flex first:justify-start last:justify-end">
@@ -64,7 +72,7 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = async ({backgroun
                                 <NavbarPopupItem
                                     background={background}
                                     to="/account"
-                                    icon="gear"
+                                    icon={faGear}
                                     label="Settings"
                                     type="link"
                                 />
@@ -72,7 +80,7 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = async ({backgroun
                             <li>
                                 <NavbarPopupItem
                                     background={background}
-                                    icon="right-from-bracket"
+                                    icon={faRightFromBracket}
                                     label="Sign out"
                                     // TODO: add signout action
                                 />
