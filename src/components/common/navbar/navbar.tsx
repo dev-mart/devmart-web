@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import classNames from "classnames";
 import Link from "next/link";
-import {NavbarItem} from "@/components/common/navbar-item/navbar-item";
+import {NavbarItem} from "@/components/common/navbar/features/navbar-item";
 import {LogoIcon} from "@/components/common/icon/logo-icon";
 import css from "@/components/common/navbar/navbar.module.scss";
-import {NavbarActionButton} from "@/components/common/navbar-action-button/navbar-action-button";
+import {NavbarActionButton} from "@/components/common/navbar/features/navbar-action-button";
 
 interface NavbarProps {
     background?: boolean;

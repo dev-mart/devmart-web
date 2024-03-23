@@ -1,7 +1,7 @@
 'use client';
 
 import React, {FC, useState} from "react";
-import {NavbarPopupItem} from "@/components/common/navbar-popup-item/navbar-popup-item";
+import {NavbarPopupItem} from "@/components/common/navbar/features/navbar-popup-item";
 import { faMoon, faLightbulb } from "@fortawesome/free-regular-svg-icons";
 
 interface ThemeNavbarPopupItemProps {

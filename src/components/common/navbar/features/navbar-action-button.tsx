@@ -3,8 +3,8 @@
 import React, {FC, useEffect} from 'react';
 import Link from "next/link";
 import classNames from "classnames";
-import {NavbarPopupItem} from "@/components/common/navbar-popup-item/navbar-popup-item";
-import {ThemeNavbarPopupItem} from '../navbar-popup-item/theme-navbar-popup-item';
+import {NavbarPopupItem} from "@/components/common/navbar/features/navbar-popup-item";
+import {ThemeNavbarPopupItem} from '@/components/common/navbar/features/variants/theme-navbar-popup-item';
 import {initDropdowns} from "flowbite";
 import {faGear, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 
