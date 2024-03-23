@@ -27,8 +27,8 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
     }
 
     const classes = classNames(
-        'text-sm py-2 px-4 transition hover:bg-zinc-200 cursor-pointer relative rounded-full plain',
-        background ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-900' : 'bg-white text-black'
+        'text-sm py-2 px-4 transition cursor-pointer relative rounded-full plain select-none',
+        background ? 'bg-gray-900 text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900' : 'bg-white text-gray-900'
     );
 
     useEffect(() => {
@@ -41,6 +41,7 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
                 <>
                     <div
                         id="user-menu-button"
+                        role="button"
                         aria-expanded="false"
                         className={classes}
                         data-dropdown-placement="bottom-end"
@@ -66,7 +67,7 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
 
                         <ul aria-labelledby="user-menu-button" className="py-2">
                             <li>
-                                <ThemeNavbarPopupItem/>
+                                <ThemeNavbarPopupItem background={background}/>
                             </li>
                             <li>
                                 <NavbarPopupItem

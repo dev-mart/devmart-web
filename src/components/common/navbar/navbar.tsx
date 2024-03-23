@@ -19,12 +19,12 @@ export const Navbar: FC<NavbarProps> = ({background = false}) => {
                 </Link>
 
                 <div>
-                    <NavbarItem label="Home" href="/"/>
-                    <NavbarItem label="Paste" href="/paste"/>
-                    <NavbarItem label="Wiki" href="/wiki"/>
+                    <NavbarItem label="Home" href="/" background={background}/>
+                    <NavbarItem label="Paste" href="/paste" background={background}/>
+                    <NavbarItem label="Wiki" href="/wiki" background={background}/>
                 </div>
 
-                <NavbarActionButton/>
+                <NavbarActionButton background={background}/>
             </nav>
         </header>
     );

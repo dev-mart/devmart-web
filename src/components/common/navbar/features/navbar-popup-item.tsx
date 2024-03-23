@@ -24,7 +24,8 @@ export const NavbarPopupItem: FC<NavbarPopupItemProps> = ({
 
     const classes = classNames(
         "px-4 py-2 w-full rounded-none text-sm flex flex-row items-center gap-2 plain",
-        background ? "text-gray-700 hover:bg-gray-100" : "text-gray-200 dark:text-gray-800 dark:hover:text-black dark:hover:bg-gray-100 hover:text-white hover:bg-gray-600"
+        background ? "text-gray-200 dark:text-gray-700 hover:bg-gray-800 dark:hover:bg-gray-100" :
+            "text-gray-800 hover:text-gray-900 hover:bg-gray-100"
     );
 
     return (
