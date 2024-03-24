@@ -6,6 +6,8 @@ import {InputRequirementList} from "@/components/common/form/input-requirement-l
 import {FieldConstraintRule} from "@/store/hooks/fields-manager/fields-manager.interface";
 import {PasswordInput} from "@/components/common/form/input/variants/password-input";
 import * as Validation from "@/helpers/validation.helper";
+import {Checkbox} from "@/components/common/form/input/variants/checkbox";
+import Link from "next/link";
 
 export const RegisterFormRow: FC<FormRowProps<RegisterFieldName>> = ({
                                                                          fm,
@@ -16,7 +18,6 @@ export const RegisterFormRow: FC<FormRowProps<RegisterFieldName>> = ({
     const email = fm.getProps(RegisterFieldName.email);
     const password = fm.getProps(RegisterFieldName.password);
     const acceptTerms = fm.getProps(RegisterFieldName.acceptTerms);
-
 
     const usernameInput = (
         <Input
@@ -30,7 +31,7 @@ export const RegisterFormRow: FC<FormRowProps<RegisterFieldName>> = ({
             containerClassName="mt-4"
             errorMessage={username.error}
             placeholder="Username"
-            label="Username or Email"
+            label="Username"
         />
     );
 
@@ -90,11 +91,31 @@ export const RegisterFormRow: FC<FormRowProps<RegisterFieldName>> = ({
         </>
     );
 
+    const acceptTermsInput = (
+        <label htmlFor={acceptTerms.name}>
+            <Checkbox
+                name={acceptTerms.name}
+                value={acceptTerms.value}
+                onValueChanged={onChange}
+                onBlur={onBlur}
+                validationState={acceptTerms.validationState}
+                containerClassName="my-4"
+                errorMessage={acceptTerms.error}
+                description={
+                    <>
+                        I agree to the{' '}<Link href="/terms">terms and conditions</Link>.
+                    </>
+                }
+            />
+        </label>
+    );
+
     return (
         <>
             {usernameInput}
             {emailInput}
             {passwordInput}
+            {acceptTermsInput}
         </>
     )
 

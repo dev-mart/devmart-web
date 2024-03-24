@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {AuthCard} from "@/components/common/auth-card/auth-card";
 import {DiscordAuthButton} from "@/components/common/discord-auth-button/discord-auth-button";
 import {useForm} from "@/store/hooks/form/store.hooks";
@@ -13,14 +13,16 @@ import {ValidationError} from "@/components/common/form/validation-error/validat
 import Link from "next/link";
 import {Button} from "@/components/common/button/button";
 import {RegisterFormRow} from "@/components/common/form-rows/register-form-row/register-form-row";
+import {ApiErrorCodes} from "@/constants/api-errors";
 
 export default function RegisterPage({
-                                      searchParams
-                                  }: {
+                                         searchParams
+                                     }: {
     searchParams: { [key: string]: string | string[] | undefined }
 }) {
-
     const {error, afterSubmitMiddleware} = useRegisterFormSubmitMiddleware(searchParams['redirect'] as string);
+    const [temporaryErrorField, setTemporaryErrorField] = React.useState<RegisterFieldName | null>(null);
+    const [correctedTemporaryError, setCorrectedTemporaryError] = React.useState<boolean>(false);
 
     const {
         fm,
@@ -33,6 +35,10 @@ export default function RegisterPage({
                     {
                         error: 'Enter a valid username (a-z0-9_-)',
                         validator: Validation.isUsername
+                    },
+                    {
+                        error: 'Username is already taken',
+                        validator: () => temporaryErrorField !== RegisterFieldName.username
                     }
                 ],
             },
@@ -41,6 +47,10 @@ export default function RegisterPage({
                     {
                         error: 'Enter a valid email',
                         validator: Validation.isEmail
+                    },
+                    {
+                        error: 'Email is already taken',
+                        validator: () => temporaryErrorField !== RegisterFieldName.email
                     }
                 ],
             },
@@ -49,7 +59,7 @@ export default function RegisterPage({
                     {
                         error: 'Enter a valid password',
                         description: 'Must be 6-30 characters long and contain at least one number.',
-                        validator: Validation.isPassword
+                        validator: Validation.isPassword,
                     }
                 ],
             },
@@ -57,15 +67,33 @@ export default function RegisterPage({
                 rules: [
                     {
                         error: 'You must accept the terms and conditions',
-                        validator: Validation.hasValue
+                        validator: Validation.isEqual('1')
                     }
                 ],
             }
         },
         {
-            afterSubmitMiddleware
+            afterChangeMiddleware: (values, actions) => {
+                if (temporaryErrorField && temporaryErrorField === values) {
+                    setCorrectedTemporaryError(true)
+                    setTemporaryErrorField(null)
+                }
+            },
+            afterSubmitMiddleware,
         }
     );
+
+    useEffect(() => {
+        if (error) {
+            if (error.errorCode === ApiErrorCodes.USERNAME_TAKEN) {
+                setTemporaryErrorField(RegisterFieldName.username);
+                setCorrectedTemporaryError(false)
+            } else if (error.errorCode === ApiErrorCodes.EMAIL_TAKEN) {
+                setTemporaryErrorField(RegisterFieldName.email);
+                setCorrectedTemporaryError(false)
+            }
+        }
+    }, [error])
 
     return (
         <AuthCard title="Sign Up." subtitle="Welcome to Devmart 👋">
@@ -83,7 +111,7 @@ export default function RegisterPage({
                     onBlur={handleBlur}
                 />
 
-                {error && <ValidationError message={error}/>}
+                {error && !temporaryErrorField && !correctedTemporaryError && <ValidationError message={error.message}/>}
 
                 <div className="flex flex-col items-center justify-end mt-4">
                     <Button disabled={!fm.isSubmittable} type="submit">

@@ -18,14 +18,15 @@ export class Input extends React.PureComponent<InputProps> {
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {onChange, onValueChanged, name} = this.props;
-        const {value} = event.target;
+        const {value, checked} = event.target;
 
         if (onChange) {
             onChange(event);
         }
 
+        const newValue = this.props.type === 'checkbox' ? (checked ? "1" : "0") : value;
         if (onValueChanged) {
-            onValueChanged({name, value});
+            onValueChanged({name, value: newValue});
         }
     }
 

@@ -11,7 +11,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
     disabled?: boolean;
     validationState?: InputValidationState;
     onValueChanged?: (nameValuePair: NameValuePair<string>) => void;
-    type?: 'text' | 'number' | 'tel' | 'search' | 'date' | 'time' | 'email' | 'password';
+    type?: 'text' | 'number' | 'tel' | 'search' | 'date' | 'time' | 'email' | 'password' | 'checkbox';
     forwardedRef?: React.RefObject<HTMLInputElement>;
     containerClassName?: string;
     name: string;

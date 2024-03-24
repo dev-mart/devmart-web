@@ -25,7 +25,6 @@ export const FormWrapper: FC<FormWrapperProps> = ({
         <form
             className={className}
             onSubmit={handleSubmit}
-            autoComplete="off"
             noValidate
             method={actionUrl ? undefined : 'post'}
             action={actionUrl || '#'}

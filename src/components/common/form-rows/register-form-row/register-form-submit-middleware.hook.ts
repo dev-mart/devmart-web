@@ -6,19 +6,19 @@ import {RegisterFieldName} from "@/components/common/form-rows/register-form-row
 import {useRegisterHook} from "@/hooks/use-register-hook";
 
 interface RegisterFormSubmitMiddlewareHook {
-    error?: string;
+    error?: ApiError;
     afterSubmitMiddleware: FormHooksSubmitMiddleware<RegisterFieldName>
 }
 
 export const useRegisterFormSubmitMiddleware: (
     redirect?: string
 ) => RegisterFormSubmitMiddlewareHook = redirect => {
-    const hook = useRegisterHook();
+    const {error, register} = useRegisterHook();
 
     return {
-        error: hook.error,
+        error: error,
         afterSubmitMiddleware: (values, actions) => {
-            hook.register(values, redirect).then(() => actions.setHasBeenSubmitted(false));
+            register(values, redirect).then(() => actions.setHasBeenSubmitted(false));
         }
     }
 }

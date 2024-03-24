@@ -91,6 +91,10 @@ const isUsername = (value: string): boolean => {
     return /^[a-zA-Z0-9_-]{3,50}$/.test((value || '').trim());
 }
 
+const isEqual = (equal: string) => (value: string): boolean => {
+    return (value || '').trim() === equal;
+}
+
 export {
     hasValue,
     minLength,
@@ -101,5 +105,6 @@ export {
     isPassword,
     isEmail,
     isDate,
-    isUsername
+    isUsername,
+    isEqual
 }
