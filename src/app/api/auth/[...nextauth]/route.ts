@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import AuthService from "@/services/AuthService";
+import {AxiosError} from "axios";
 
 const handler = NextAuth({
     pages: {
@@ -39,7 +40,11 @@ const handler = NextAuth({
                         email,
                         token
                     }
-                } catch (e) {
+                } catch (error) {
+                    if (error instanceof AxiosError && error.response?.status !== 401) {
+                        throw new Error('ApiError');
+                    }
+
                     return null;
                 }
             }

@@ -16,7 +16,7 @@ export const useLoginHook = () => {
             });
 
             if (signedIn?.ok) {
-                router.push(redirect || '/');
+                window.location.href = redirect || '/';
                 return;
             }
 
