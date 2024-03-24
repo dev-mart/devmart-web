@@ -18,7 +18,6 @@ export const useRegisterFormSubmitMiddleware: (
     return {
         error: hook.error,
         afterSubmitMiddleware: (values, actions) => {
-            console.log('yeett')
             hook.register(values, redirect).then(() => actions.setHasBeenSubmitted(false));
         }
     }

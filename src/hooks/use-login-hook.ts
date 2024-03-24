@@ -1,9 +1,8 @@
 import {useState} from "react";
 import {useRouter} from "next/navigation";
-import AuthService from "@/services/AuthService";
 import {Values} from "@/store/hooks/form/store.interface";
 import {LoginFieldName} from "@/components/common/form-rows/login-form-row/login-form.row.enums";
-import {AxiosError} from "axios";
+import {signIn} from "next-auth/react";
 
 export const useLoginHook = () => {
     const [error, setError] = useState<string | undefined>();
@@ -11,24 +10,26 @@ export const useLoginHook = () => {
 
     const login = async (values: Values<LoginFieldName>, redirect?: string) => {
         try {
-            const {username, password} = values;
-
-            const response = await AuthService.login({
-                username,
-                password,
+            const signedIn = await signIn('credentials', {
+                redirect: false,
+                ...values
             });
 
-            if (response.status === 200) {
+            if (signedIn?.ok) {
                 router.push(redirect || '/');
-            }
-            return;
-        } catch (e) {
-            if (e instanceof AxiosError) {
-                setError(e?.response?.data?.message);
                 return;
             }
+
+            if (signedIn?.error === "CredentialsSignin") {
+                setError('Invalid credentials. Please try again.');
+                return;
+            }
+
+            setError('Something went wrong. Please try again later.');
+            return;
+        } catch (e) {
+            setError('Something went wrong. Please try again later.')
         }
-        setError('Something went wrong. Please try again later.')
     };
 
     return {

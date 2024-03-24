@@ -1,5 +1,3 @@
-"use client";
-
 import React, {FC, useEffect} from 'react';
 import Link from "next/link";
 import classNames from "classnames";
@@ -7,6 +5,7 @@ import {NavbarPopupItem} from "@/components/common/navbar/features/navbar-popup-
 import {ThemeNavbarPopupItem} from '@/components/common/navbar/features/variants/theme-navbar-popup-item';
 import {initDropdowns} from "flowbite";
 import {faGear, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
+import {signOut, useSession} from "next-auth/react";
 
 interface NavbarActionButtonProps {
     pathName?: string;
@@ -14,8 +13,7 @@ interface NavbarActionButtonProps {
 }
 
 export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = false, pathName}) => {
-    // let {data: session} = useSession();
-    const session = {user: {username: 'test'}};
+    let {data: session} = useSession();
 
     const loginLink = () => {
         return {
@@ -32,7 +30,7 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
     );
 
     useEffect(() => {
-       initDropdowns();
+        initDropdowns();
     });
 
     return (
@@ -61,7 +59,7 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
                                 "block text-sm",
                                 background ? "text-gray-100 dark:text-black" : "text-gray-900"
                             )}>
-                                Hi, {session.user.username}! 👋
+                                Hi, {session.user?.name}! 👋
                             </span>
                         </div>
 
@@ -83,7 +81,7 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
                                     background={background}
                                     icon={faRightFromBracket}
                                     label="Sign out"
-                                    // TODO: add signout action
+                                    onClick={() => signOut()}
                                 />
                             </li>
                         </ul>

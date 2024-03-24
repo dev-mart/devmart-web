@@ -6,12 +6,10 @@ import {AxiosError} from "axios";
 import {RegisterFieldName} from "@/components/common/form-rows/register-form-row/register-form-row.enums";
 
 export const useRegisterHook = () => {
-    console.log('yeeehaw')
     const [error, setError] = useState<string | undefined>();
     const router = useRouter();
 
     const register = async (values: Values<RegisterFieldName>, redirect?: string) => {
-        console.log('registering')
         try {
             const {username, email, password} = values;
 
@@ -20,8 +18,6 @@ export const useRegisterHook = () => {
                 email,
                 password,
             });
-
-            console.log(response)
 
             if (response.status === 201) {
                 router.push(redirect || '/');
