@@ -1,14 +1,17 @@
 import React from "react";
 import '@/styles/globals.scss';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import { config } from "@fortawesome/fontawesome-svg-core";
+import {config} from "@fortawesome/fontawesome-svg-core";
+
 config.autoAddCss = false;
 
-export default function AuthPageLayout({
-                                           children
-                                       }: {
-    children: React.ReactNode
-}) {
+interface RootLayoutProps {
+    children: React.ReactNode;
+}
+
+export default async function RootLayout({
+                                             children
+                                         }: RootLayoutProps) {
     return (
         <html lang="en">
         <head>

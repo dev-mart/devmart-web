@@ -12,7 +12,9 @@ import {LoginFormRow} from "@/components/common/form-rows/login-form-row/login-f
 import {FieldsManager} from "@/store/hooks/fields-manager/fields-manager.interface";
 import {LoginFieldName} from "@/components/common/form-rows/login-form-row/login-form.row.enums";
 import {useLoginFormSubmitMiddleware} from "@/components/common/form-rows/login-form-row/login-form-submit-middleware.hook";
-import { FormWrapper } from '@/components/common/form-wrapper/form-wrapper';
+import {FormWrapper} from '@/components/common/form-wrapper/form-wrapper';
+import {Alert} from "flowbite-react";
+import {HiCheckCircle} from "react-icons/hi2";
 
 export default function LoginPage({
                                       searchParams
@@ -50,7 +52,19 @@ export default function LoginPage({
     );
 
     return (
-        <AuthCard title="Login." subtitle="Hi, welcome back 👋">
+        <AuthCard
+            title="Login."
+            subtitle="Hi, welcome back 👋"
+            prefixNode={
+                searchParams['registered'] == '1' && (
+                    <div className="mb-4 w-full sm:max-w-md px-6">
+                        <Alert color="success" icon={HiCheckCircle}>
+                            Your account has successfully been created. You can now log in!
+                        </Alert>
+                    </div>
+                )
+            }>
+
             <FormWrapper onSubmit={handleSubmit}>
                 <DiscordAuthButton
                     label="Login with Discord"
@@ -65,7 +79,7 @@ export default function LoginPage({
                     onBlur={handleBlur}
                 />
 
-                {error && <ValidationError message={error.message}/>}
+                {error && <ValidationError message={error}/>}
 
                 <div className="flex flex-row mt-2 center justify-between">
                     <Link className="underline text-sm" href="/reset-password">Forgot your password?</Link>

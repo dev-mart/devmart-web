@@ -18,14 +18,15 @@ export class Input extends React.PureComponent<InputProps> {
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {onChange, onValueChanged, name} = this.props;
-        const {value} = event.target;
+        const {value, checked} = event.target;
 
         if (onChange) {
             onChange(event);
         }
 
+        const newValue = this.props.type === 'checkbox' ? (checked ? "1" : "0") : value;
         if (onValueChanged) {
-            onValueChanged({name, value});
+            onValueChanged({name, value: newValue});
         }
     }
 
@@ -60,6 +61,8 @@ export class Input extends React.PureComponent<InputProps> {
             value,
             autoComplete,
             label,
+            inputContainerChildren,
+            inputContainerClassName,
             ...restProps
         } = this.props;
 
@@ -69,19 +72,23 @@ export class Input extends React.PureComponent<InputProps> {
                     <Label htmlFor={name} label={label}/>
                 )}
 
-                <input
-                    className={this.getClassNames()}
-                    type={type}
-                    placeholder={placeholder}
-                    onChange={this.handleChange}
-                    name={name}
-                    id={name}
-                    disabled={disabled}
-                    ref={this.input}
-                    value={value}
-                    autoComplete={autoComplete}
-                    {...restProps}
-                />
+                <div className={classNames('relative', inputContainerClassName)}>
+                    <input
+                        className={this.getClassNames()}
+                        type={type}
+                        placeholder={placeholder}
+                        onChange={this.handleChange}
+                        name={name}
+                        id={name}
+                        disabled={disabled}
+                        ref={this.input}
+                        value={value}
+                        autoComplete={autoComplete}
+                        {...restProps}
+                    />
+                    {inputContainerChildren && inputContainerChildren}
+                </div>
+
 
                 {children}
 

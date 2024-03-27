@@ -123,7 +123,7 @@ export function useForm<FieldName extends string>(
         if (nextFm.isSubmittable) {
             // Proceed with submitting
             actions.setHasBeenSubmitted(true);
-            afterSubmitMiddleware(nextFm.values, actions);
+            if (afterSubmitMiddleware) afterSubmitMiddleware(nextFm.values, actions);
         }
     };
 

@@ -4,7 +4,7 @@ import {ApiError} from "@/models/rest/ApiError";
 import {useLoginHook} from "@/hooks/use-login-hook";
 
 interface LoginFormSubmitMiddlewareHook {
-    error: ApiError | null;
+    error?: string;
     afterSubmitMiddleware: FormHooksSubmitMiddleware<LoginFieldName>
 }
 
