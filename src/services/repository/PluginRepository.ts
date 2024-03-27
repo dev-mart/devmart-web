@@ -73,13 +73,16 @@ export default {
         });
     },
 
-    async fetchPlugins(filter: PluginFilter = PluginFilter.ALL, query: string = '', page: number = 1, perPage: number = 6): Promise<PluginListResponse> {
+    async fetchPlugins(filter: PluginFilter = PluginFilter.ALL, query: string = '', page: number = 1, perPage: number = 6, authToken?: string): Promise<PluginListResponse> {
         const res = await axios.get(API_PLUGINS_URL, {
             params: {
                 filter,
                 query,
                 page,
                 perPage
+            },
+            headers: {
+                Authorization: `Bearer ${authToken}`
             }
         });
         const data = res.data;

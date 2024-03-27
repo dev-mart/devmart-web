@@ -21,7 +21,7 @@ export default async function RootLayout({
             <meta name="googlebot" content="index, follow"/>
             <title>Devmart</title>
 
-            <script src="https://kit.fontawesome.com/29a1d6d28e.js" crossOrigin="anonymous"></script>
+            <script src="https://kit.fontawesome.com/29a1d6d28e.js" crossOrigin="anonymous" async></script>
         </head>
         <body className="h-screen">
         {children}

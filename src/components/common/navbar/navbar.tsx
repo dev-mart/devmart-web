@@ -25,6 +25,7 @@ export const Navbar: FC<NavbarProps> = async ({background = false}) => {
                 <div>
                     <NavbarItem label="Home" href="/" background={background}/>
                     <NavbarItem label="Paste" href="/paste" background={background}/>
+                    <NavbarItem label="Plugins" href="/plugins" background={background}/>
                     <NavbarItem label="Wiki" href="/wiki" background={background}/>
 
                     {session?.user && (

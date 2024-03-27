@@ -2,12 +2,11 @@ import React from 'react';
 import {Navbar} from "@/components/common/navbar/navbar";
 import {getServerSession} from "next-auth";
 import {redirect} from "next/navigation";
+import {ChildrenProp} from "@/interfaces/common";
 
 export default async function AuthPageLayout({
                                            children
-                                       }: {
-    children: React.ReactNode
-}) {
+                                       }: ChildrenProp) {
     const session = await getServerSession();
     if (session) {
         redirect('/');
