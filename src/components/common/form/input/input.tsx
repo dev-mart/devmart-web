@@ -31,10 +31,16 @@ export class Input extends React.PureComponent<InputProps> {
     }
 
     getClassNames = (): string => {
-        const {disabled, validationState, type, className} = this.props;
+        const {
+            disabled,
+            validationState,
+            marginTop = true,
+            className
+        } = this.props;
 
         return classNames(
-            "!rounded-md shadow-sm dark:!shadow-gray-700 focus:ring dark:border-gray-700 focus:ring-opacity-50 w-full mt-1",
+            "!rounded-md shadow-sm dark:!shadow-gray-700 focus:ring dark:border-gray-700 focus:ring-opacity-50 w-full",
+            marginTop && 'mt-1',
             validationState === InputValidationState.INVALID && 'border-red-300 focus:border-red-300 focus:ring-red-200',
             validationState === InputValidationState.UNDETERMINED && 'border-gray-300 dark:border-gray-700 focus:border-indigo-300 dark:ring-offset-gray-700 focus:ring-indigo-200',
             validationState === InputValidationState.VALID && 'border-green-300 focus:border-green-300 focus:ring-green-200',

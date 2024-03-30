@@ -22,4 +22,5 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
     label?: string;
     inputContainerClassName?: string,
     inputContainerChildren?: React.ReactNode;
+    marginTop?: boolean;
 }
