@@ -16,6 +16,7 @@ export const Checkbox: FC<CheckboxProps> = ({label, description, className,...pr
             inputContainerChildren={
                 <span className="text-gray-600">{description}</span>
             }
+            marginTop={false}
             {...props}
         />
     );
