@@ -14,6 +14,7 @@ interface NavbarProps {
 
 export const Navbar: FC<NavbarProps> = async ({background = false}) => {
     const session = await getServerSession(authOptions) as Session | null;
+    console.log(session)
 
     return (
         <header className={classNames({'header-filled': background}, 'w-full z-10 justify-center max-w-screen-xl px-3 md:px-6 lg:px-10')}>
