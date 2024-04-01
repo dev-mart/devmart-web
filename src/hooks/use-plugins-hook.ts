@@ -1,6 +1,5 @@
 import {AxiosError} from "axios";
-import {PluginFilter} from "@/models/rest/plugin/PluginFilter";
-import {PluginListResponse} from "@/models/rest/plugin/PluginListResponse";
+import {PluginFilter, PluginListResponse} from "@/interfaces/plugin.interface";
 import {useCallback, useEffect} from "react";
 import {ApiErrorCodes} from "@/constants/api-errors";
 import {useApiHook} from "@/hooks/use-api-hook";

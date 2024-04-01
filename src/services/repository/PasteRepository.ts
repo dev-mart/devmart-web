@@ -1,7 +1,5 @@
 import axios from 'axios';
-import {PasteListResponse} from '@/models/rest/paste/PasteListResponse';
-import {Paste} from '@/models/paste/Paste';
-import {PasteCreateBody} from '@/models/rest/paste/PasteCreateBody';
+import {Paste, PasteCreateBody, PasteListResponse} from '@/interfaces/paste.interface';
 import {API_PASTE_URL} from '@/constants/api';
 
 export const client = axios.create({
@@ -12,88 +10,72 @@ export const client = axios.create({
     withCredentials: true
 });
 
-export default {
+/**
+ * Fetch a list of recently created/updated pastes.
+ * @param page The page to fetch.
+ * @param perPage The number of pastes per page.
+ */
+export const fetchRecentPastes = async (page: number = 1, perPage: number = 8): Promise<PasteListResponse> => {
+    const res = await axios.get(API_PASTE_URL, {
+        params: {
+            page,
+            perPage
+        }
+    });
 
-    /**
-     * Fetch a list of recently created/updated pastes.
-     * @param page The page to fetch.
-     * @param perPage The number of pastes per page.
-     */
-    async fetchRecentPastes(page: number = 1, perPage: number = 8): Promise<PasteListResponse> {
-        const res = await axios.get(API_PASTE_URL, {
-            params: {
-                page,
-                perPage
-            }
-        });
+    return res.data as PasteListResponse;
+}
 
-        const data = res.data;
+/**
+ * Create a new paste
+ * @param body The paste data.
+ * @return Promise<Paste> The created paste.
+ */
+export const createPaste = async (body: PasteCreateBody): Promise<Paste> => {
+    const res = await axios.post(API_PASTE_URL, body);
 
-        return {
-            total: data.total,
-            currentPage: data.currentPage,
-            pages: data.pages,
-            pastes: data.pastes
-        };
-    },
+    return res.data;
+}
 
-    /**
-     * Create a new paste
-     * @param body The paste data.
-     * @return Promise<Paste> The created paste.
-     */
-    async createPaste(body: PasteCreateBody): Promise<Paste> {
-        const res = await axios.post(API_PASTE_URL, body);
+/**
+ * Update a paste by its ID.
+ * @param pasteId The ID of the paste to update.
+ * @param body The new paste data.
+ * @return Promise<Paste> The updated paste.
+ */
+export const updatePaste = async (pasteId: string, body: PasteCreateBody): Promise<Paste> => {
+    const res = await client.put(`/${pasteId}`, body);
+    return res.data;
+}
 
-        return res.data;
-    },
+/**
+ * Deletes a paste by its ID.
+ * @param pasteId The ID of the paste to delete.
+ * @returns boolean Whether the paste was deleted successfully.
+ */
+export const deletPaste = async (pasteId: string): Promise<boolean> => {
+    const res = await client.delete(`/${pasteId}`);
+    return res.status === 200;
+}
 
-    /**
-     * Update a paste by its ID.
-     * @param pasteId The ID of the paste to update.
-     * @param body The new paste data.
-     * @return Promise<Paste> The updated paste.
-     */
-    async updatePaste(pasteId: string, body: PasteCreateBody): Promise<Paste> {
-        const res = await client.put(`/${pasteId}`, body);
-        return res.data;
-    },
+/**
+ * Fetch a paste by its ID.
+ * @param pasteId The ID of the paste to fetch.
+ * @returns Promise<Paste> The fetched paste.
+ */
+export const fetchPaste = async (pasteId: string): Promise<Paste> => {
+    const res = await client.get(`/${pasteId}`);
+    // return new Paste(res.data);
+    return res.data;
+}
 
-    /**
-     * Deletes a paste by its ID.
-     * @param pasteId The ID of the paste to delete.
-     * @returns boolean Whether the paste was deleted successfully.
-     */
-    async deletePaste(pasteId: string): Promise<boolean> {
-        const res = await client.delete(`/${pasteId}`);
-        return res.status === 200;
-    },
+export const fetchUserPastesById = async (userId: number, query: string = '', page: number = 1): Promise<PasteListResponse> => {
+    const res = await client.get(`/user/${userId}`, {
+        params: {
+            query,
+            page
+        }
+    });
 
-    /**
-     * Fetch a paste by its ID.
-     * @param pasteId The ID of the paste to fetch.
-     * @returns Promise<Paste> The fetched paste.
-     */
-    async fetchPaste(pasteId: string): Promise<Paste> {
-        const res = await client.get(`/${pasteId}`);
-        // return new Paste(res.data);
-        return res.data;
-    },
-
-    async fetchUserPastesById(userId: number, query: string = '', page: number = 1): Promise<PasteListResponse> {
-        const res = await client.get(`/user/${userId}`, {
-            params: {
-                query,
-                page
-            }
-        });
-
-        return {
-            total: res.data.total,
-            currentPage: res.data.currentPage,
-            pages: res.data.pages,
-            pastes: res.data.pastes
-        };
-    }
-
-};
+    return res.data as PasteListResponse;
+}

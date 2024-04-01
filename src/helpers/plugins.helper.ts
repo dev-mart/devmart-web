@@ -1,7 +1,6 @@
-import {PluginFilter} from "@/models/rest/plugin/PluginFilter";
+import {PluginFilter, PluginListResponse} from "@/interfaces/plugin.interface";
 import {api} from "@/services/api";
 import {API_PLUGINS_URL} from "@/constants/api";
-import {PluginListResponse} from "@/models/rest/plugin/PluginListResponse";
 
 export const getApiPlugins = async (
     filter: PluginFilter = PluginFilter.ALL,
@@ -17,13 +16,6 @@ export const getApiPlugins = async (
             perPage
         },
     });
-    const {totalElements, totalPages, currentPage, content, pageSize} = res.data;
 
-    return {
-        totalElements,
-        pageSize,
-        currentPage,
-        totalPages,
-        content
-    }
+    return res.data as PluginListResponse;
 }

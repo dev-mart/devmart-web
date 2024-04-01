@@ -1,3 +1,5 @@
+import {PageableRestResponse} from '@/interfaces/api.interface';
+
 export interface PluginAuthor {
     id: string;
     username: string;
@@ -22,4 +24,14 @@ export interface Plugin {
     author: PluginAuthor;
     createdAt?: Date;
     updatedAt?: Date;
+}
+
+export enum PluginFilter {
+    ALL = 'all',
+    PURCHASED = 'purchased',
+    PREMIUM = 'premium',
+    FREE = 'free',
+}
+
+export interface PluginListResponse extends PageableRestResponse<Plugin> {
 }

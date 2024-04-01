@@ -10,3 +10,11 @@ export enum ApiStatus {
     ready = 2,
     error = 3
 }
+
+export interface PageableRestResponse<T> {
+    pageSize: number;
+    currentPage: number;
+    totalElements: number;
+    totalPages: number;
+    content: T[];
+}

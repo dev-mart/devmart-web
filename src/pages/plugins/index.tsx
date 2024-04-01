@@ -2,8 +2,7 @@ import {PluginListSidebar} from "@/components/common/sidebar/variants/plugin-lis
 import React from "react";
 import {GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType} from "next";
 import {getApiPlugins} from "@/helpers/plugins.helper";
-import {PluginFilter} from "@/models/rest/plugin/PluginFilter";
-import {PluginListResponse} from "@/models/rest/plugin/PluginListResponse";
+import {PluginListResponse, PluginFilter} from "@/interfaces/plugin.interface";
 import {PluginListLayout} from "@/layouts/plugin-list-layout";
 
 interface PluginListPageProps {
