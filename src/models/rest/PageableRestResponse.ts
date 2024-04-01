@@ -1,7 +1,9 @@
-export interface PageableRestResponse {
+export interface PageableRestResponse<T> {
 
-    total: number;
+    pageSize: number;
     currentPage: number;
-    pages: number;
+    totalElements: number;
+    totalPages: number;
+    content: T[];
 
 }

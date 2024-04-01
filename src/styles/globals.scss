@@ -110,3 +110,7 @@ a:not(.plain) {
     @apply underline text-primary-600;
   }
 }
+
+#__next {
+  @apply h-screen;
+}

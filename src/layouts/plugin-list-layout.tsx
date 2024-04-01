@@ -1,15 +1,10 @@
-import React from 'react';
+import React, {FC} from "react";
+import {ChildrenProp} from "@/interfaces/common";
 import {Navbar} from "@/components/common/navbar/navbar";
 import {HeaderBackground} from "@/components/common/header-background/header-background";
 import {Grid} from "@/components/common/grid/grid";
 
-interface LayoutProps {
-    children: React.ReactNode;
-}
-
-export default async function PastesListLayout({
-                                                   children
-                                               }: LayoutProps) {
+export const PluginListLayout: FC<ChildrenProp> = ({children}) => {
     return (
         <div className="flex flex-row">
             <div className="w-full flex flex-col items-center m-0 p-0">

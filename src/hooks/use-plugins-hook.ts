@@ -1,13 +1,11 @@
-import {API_PLUGINS_URL} from "@/constants/api";
-import {getSession} from "next-auth/react";
-import axios, {AxiosError} from "axios";
-import Plugin from "@/models/plugin/Plugin";
+import {AxiosError} from "axios";
 import {PluginFilter} from "@/models/rest/plugin/PluginFilter";
 import {PluginListResponse} from "@/models/rest/plugin/PluginListResponse";
 import {useCallback, useEffect} from "react";
 import {ApiErrorCodes} from "@/constants/api-errors";
 import {useApiHook} from "@/hooks/use-api-hook";
 import {ApiStatus} from "@/interfaces/api.interface";
+import {getApiPlugins} from "@/helpers/plugins.helper";
 
 export const usePluginsHook = (
     filter: PluginFilter = PluginFilter.ALL,
@@ -28,34 +26,12 @@ export const usePluginsHook = (
         console.log("Loading plugins...");
         console.log("Filter: ", filter);
 
-        const session = await getSession();
-        const token = session?.user.token;
-
-        const headers = !token ? {} : {
-            Authorization: `Bearer ${token}`
-        }
-
         try {
             setStatus(ApiStatus.loading);
-            const res = await axios.get(API_PLUGINS_URL, {
-                params: {
-                    filter,
-                    query,
-                    page,
-                    perPage
-                },
-                headers
-            });
-            const {total, currentPage, pages, content} = res.data;
 
-            const parsedPlugins = content.map((plugin: any) => new Plugin(plugin))
+            const pluginList = await getApiPlugins(filter, query, page, perPage);
+            setData(pluginList);
 
-            setData({
-                total,
-                currentPage,
-                pages,
-                plugins: parsedPlugins
-            });
             setStatus(ApiStatus.ready);
             return;
         } catch (e) {

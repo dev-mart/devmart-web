@@ -5,15 +5,15 @@ import {NavbarItem} from "@/components/common/navbar/features/navbar-item";
 import {LogoIcon} from "@/components/common/icon/logo-icon";
 import css from "@/components/common/navbar/navbar.module.scss";
 import {NavbarActionButton} from "@/components/common/navbar/features/navbar-action-button";
-import {getServerSession, Session} from "next-auth";
-import {authOptions} from "@/app/api/auth/[...nextauth]/route";
+import {useSessionHook} from "@/hooks/use-session-hook";
 
 interface NavbarProps {
     background?: boolean;
 }
 
-export const Navbar: FC<NavbarProps> = async ({background = false}) => {
-    const session = await getServerSession(authOptions) as Session | null;
+export const Navbar: FC<NavbarProps> = ({background = false}) => {
+    const {session} = useSessionHook();
+
     console.log(session)
 
     return (

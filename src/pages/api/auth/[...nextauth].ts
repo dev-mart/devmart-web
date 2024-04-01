@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import AuthService from "@/services/AuthService";
 import {AxiosError} from "axios";
 
-const handler = NextAuth({
+export const authOptions = {
     pages: {
         signIn: '/login',
         newUser: '/register',
@@ -50,6 +50,6 @@ const handler = NextAuth({
             }
         })
     ]
-});
+};
 
-export {handler as GET, handler as POST, handler as authOptions}
+export default NextAuth(authOptions);

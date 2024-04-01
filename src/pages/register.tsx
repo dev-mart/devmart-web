@@ -14,13 +14,19 @@ import Link from "next/link";
 import {Button} from "@/components/common/button/button";
 import {RegisterFormRow} from "@/components/common/form-rows/register-form-row/register-form-row";
 import {ApiErrorCodes} from "@/constants/api-errors";
+import {GetServerSidePropsContext} from "next";
+import {checkSession} from "@/helpers/auth.helper";
+import {useSearchParams} from "next/navigation";
+import {AuthLayout} from "@/layouts/auth-layout";
 
-export default function RegisterPage({
-                                         searchParams
-                                     }: {
-    searchParams: { [key: string]: string | string[] | undefined }
-}) {
-    const {error, afterSubmitMiddleware} = useRegisterFormSubmitMiddleware(searchParams['redirect'] as string);
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+    return await checkSession(context, false, true);
+}
+
+export default function RegisterPage() {
+    const searchParams = useSearchParams();
+
+    const {error, afterSubmitMiddleware} = useRegisterFormSubmitMiddleware(searchParams.get('redirect') as string);
     const [temporaryErrorField, setTemporaryErrorField] = React.useState<RegisterFieldName | null>(null);
     const [correctedTemporaryError, setCorrectedTemporaryError] = React.useState<boolean>(false);
 
@@ -96,33 +102,35 @@ export default function RegisterPage({
     }, [error])
 
     return (
-        <AuthCard title="Sign Up." subtitle="Welcome to Devmart 👋">
-            <FormWrapper onSubmit={handleSubmit}>
-                <DiscordAuthButton
-                    label="Sign up with Discord"
-                    href="/api/auth/discord/register"
-                />
+        <AuthLayout>
+            <AuthCard title="Sign Up." subtitle="Welcome to Devmart 👋">
+                <FormWrapper onSubmit={handleSubmit}>
+                    <DiscordAuthButton
+                        label="Sign up with Discord"
+                        href="/api/auth/discord/register"
+                    />
 
-                <hr/>
+                    <hr/>
 
-                <RegisterFormRow
-                    fm={fm as FieldsManager<RegisterFieldName>}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                />
+                    <RegisterFormRow
+                        fm={fm as FieldsManager<RegisterFieldName>}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    />
 
-                {error && !temporaryErrorField && !correctedTemporaryError && <ValidationError message={error.message}/>}
+                    {error && !temporaryErrorField && !correctedTemporaryError && <ValidationError message={error.message}/>}
 
-                <div className="flex flex-col items-center justify-end mt-4">
-                    <Button disabled={!fm.isSubmittable} type="submit">
-                        {fm.hasBeenSubmitted ? 'Creating your account...' : 'Create account'}
-                    </Button>
-                </div>
-                <div className="mt-4 text-center flex gap-2 justify-center items-center">
-                    Already have an account?
-                    <Link href="/login">Login in Now!</Link>
-                </div>
-            </FormWrapper>
-        </AuthCard>
+                    <div className="flex flex-col items-center justify-end mt-4">
+                        <Button disabled={!fm.isSubmittable} type="submit">
+                            {fm.hasBeenSubmitted ? 'Creating your account...' : 'Create account'}
+                        </Button>
+                    </div>
+                    <div className="mt-4 text-center flex gap-2 justify-center items-center">
+                        Already have an account?
+                        <Link href="/login">Login in Now!</Link>
+                    </div>
+                </FormWrapper>
+            </AuthCard>
+        </AuthLayout>
     )
 }

@@ -1,8 +1,4 @@
 import {PageableRestResponse} from '@/models/rest/PageableRestResponse';
-import Plugin from '@/models/plugin/Plugin';
+import {Plugin} from '@/interfaces/plugin.interface'
 
-export interface PluginListResponse extends PageableRestResponse {
-
-    plugins: Array<Plugin>;
-
-}
+export interface PluginListResponse extends PageableRestResponse<Plugin> {}
