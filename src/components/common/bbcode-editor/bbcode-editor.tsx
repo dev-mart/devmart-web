@@ -50,8 +50,7 @@ export const BBCodeEditor: FC<BBCodeEditorProps> = ({
             ) : (
                 <Input
                     value={value}
-                    onChange={(e) => onChange(e)}
-                    isTextArea
+                    name="bbcode"
                     placeholder={placeholder}
                     required={required}
                     className={"bbcode-editor"}

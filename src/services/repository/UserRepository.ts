@@ -1,3 +1,4 @@
+/*
 import axios from 'axios/index';
 import {AxiosResponse} from 'axios';
 import {API_BASE_URL, API_USERS_URL} from '@/constants/api';
@@ -75,3 +76,4 @@ export default {
         }
     }
 };
+*/

@@ -4,8 +4,8 @@ import AuthService from "@/services/AuthService";
 import {Values} from "@/store/hooks/form/store.interface";
 import {AxiosError} from "axios";
 import {RegisterFieldName} from "@/components/common/form-rows/register-form-row/register-form-row.enums";
-import {ApiError} from "@/models/rest/ApiError";
 import {ApiErrorCodes} from "@/constants/api-errors";
+import {ApiError} from "@/interfaces/api.interface";
 
 export const useRegisterHook = () => {
     const [error, setError] = useState<ApiError | undefined>();

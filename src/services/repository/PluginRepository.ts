@@ -1,12 +1,10 @@
 import axios, {AxiosResponse} from 'axios';
-import {PluginFilter} from '@/models/rest/plugin/PluginFilter';
-import Plugin from '@/models/plugin/Plugin';
-import {PluginListResponse} from '@/models/rest/plugin/PluginListResponse';
-import {PluginUpdate} from '@/models/plugin/PluginUpdate';
-import {PluginUpdatesResponse} from '@/models/rest/plugin/PluginUpdatesResponse';
-import {PluginPurchasesResponse} from '@/models/rest/plugin/PluginPurchasesResponse';
-import {PluginPurchase} from '@/models/plugin/PluginPurchase';
-import {PluginPermissions} from '@/models/plugin/PluginPermissions';
+import {Plugin, PluginListResponse, PluginFilter} from '@/interfaces/plugin.interface';
+// import {PluginUpdate} from '@/models/plugin/PluginUpdate';
+// import {PluginUpdatesResponse} from '@/models/rest/plugin/PluginUpdatesResponse';
+// import {PluginPurchasesResponse} from '@/models/rest/plugin/PluginPurchasesResponse';
+// import {PluginPurchase} from '@/models/plugin/PluginPurchase';
+// import {PluginPermissions} from '@/models/plugin/PluginPermissions';
 import {API_PLUGINS_URL} from '@/constants/api';
 
 export const client = axios.create({
@@ -50,146 +48,137 @@ const loadParams = (user: number | undefined, query: string | undefined, from: D
     return params;
 };
 
-export default {
-    async fetchSales(user: number | undefined = undefined, query: string | undefined = undefined, page: number = 1,
-                     from: Date | undefined = undefined, to: Date | undefined = undefined, perPage: number | undefined = undefined,
-                     sum: boolean | undefined = undefined): Promise<AxiosResponse> {
-        return await client.get('/sales', {
-            params: loadParams(user, query, from, to, page, perPage, sum)
-        });
-    },
+export const fetchSales = async (user: number | undefined = undefined, query: string | undefined = undefined, page: number = 1,
+                                 from: Date | undefined = undefined, to: Date | undefined = undefined, perPage: number | undefined = undefined,
+                                 sum: boolean | undefined = undefined): Promise<AxiosResponse> => {
+    return await client.get('/sales', {
+        params: loadParams(user, query, from, to, page, perPage, sum)
+    });
+}
 
-    async fetchSalesSum(user: number | undefined = undefined, from: Date | undefined = undefined, to: Date | undefined = undefined,
-                        compareFrom: Date | undefined = undefined, compareTo: Date | undefined = undefined): Promise<AxiosResponse> {
-        return await client.get('/sales', {
-            params: loadParams(user, undefined, from, to, undefined, undefined, true, compareFrom, compareTo)
-        });
-    },
+export const fetchSalesSum = async (user: number | undefined = undefined, from: Date | undefined = undefined, to: Date | undefined = undefined,
+                                    compareFrom: Date | undefined = undefined, compareTo: Date | undefined = undefined): Promise<AxiosResponse> => {
+    return await client.get('/sales', {
+        params: loadParams(user, undefined, from, to, undefined, undefined, true, compareFrom, compareTo)
+    });
+}
 
-    async fetchDailySales(user: number | undefined = undefined, query: string | undefined = undefined, from: Date | undefined = undefined,
-                          to: Date | undefined = undefined, records: number | undefined = undefined): Promise<AxiosResponse> {
-        return await client.get('/sales/daily', {
-            params: loadParams(user, query, from, to, records, undefined, undefined)
-        });
-    },
+export const fetchDailySales = async (user: number | undefined = undefined, query: string | undefined = undefined, from: Date | undefined = undefined,
+                                      to: Date | undefined = undefined, records: number | undefined = undefined): Promise<AxiosResponse> => {
+    return await client.get('/sales/daily', {
+        params: loadParams(user, query, from, to, records, undefined, undefined)
+    });
+}
 
-    async fetchPlugins(filter: PluginFilter = PluginFilter.ALL, query: string = '', page: number = 1, perPage: number = 6): Promise<PluginListResponse> {
-        const res = await axios.get(API_PLUGINS_URL, {
-            params: {
-                filter,
-                query,
-                page,
-                perPage
-            }
-        });
-        const data = res.data;
-
-        const plugins: Plugin[] = [];
-        for (const plugin of data.plugins) {
-            plugins.push(new Plugin(plugin));
+export const fetchPlugins = async (filter: PluginFilter = PluginFilter.ALL, query: string = '', page: number = 1,
+                                   perPage: number = 6, authToken?: string): Promise<PluginListResponse> => {
+    const res = await axios.get(API_PLUGINS_URL, {
+        params: {
+            filter,
+            query,
+            page,
+            perPage
+        },
+        headers: {
+            Authorization: `Bearer ${authToken}`
         }
-        return {
-            total: data.total,
-            currentPage: data.currentPage,
-            pages: data.pages,
-            plugins
-        };
-    },
+    });
 
-    async fetchPluginUpdates(pluginId: number, page: number = 1, perPage: number = 10): Promise<PluginUpdatesResponse> {
-        const res = await client.get(`/${pluginId}/updates`, {
-            params: {
-                page,
-                perPage
-            }
-        });
-        const data = res.data;
+    return res.data as PluginListResponse;
+}
 
-        const updates: PluginUpdate[] = [];
-        for (const update of res.data.updates) {
-            updates.push(update as PluginUpdate);
+/*async fetchPluginUpdates(pluginId: number, page: number = 1, perPage: number = 10): Promise<PluginUpdatesResponse> {
+    const res = await client.get(`/${pluginId}/updates`, {
+        params: {
+            page,
+            perPage
         }
+    });
+    const data = res.data;
 
-        return {
-            total: data.total,
-            currentPage: data.currentPage,
-            pages: data.pages,
-            updates
-        };
-    },
-
-    async fetchPluginPurchases(pluginId: number, page: number = 1, perPage: number = 15, query: number | undefined = undefined,
-                               from: Date | undefined = undefined, to: Date | undefined = undefined): Promise<PluginPurchasesResponse> {
-        const res = await client.get(`/${pluginId}/transactions`, {
-            params: {
-                page,
-                perPage,
-                query,
-                from,
-                to
-            }
-        });
-        const data = res.data;
-
-        const purchases: PluginPurchase[] = [];
-        for (const purchase of res.data.transactions) {
-            purchases.push(purchase as PluginPurchase);
-        }
-
-        return {
-            total: data.total,
-            currentPage: data.currentPage,
-            pages: data.pages,
-            purchases
-        };
-    },
-
-    async fetchPluginUpdate(updateId: number): Promise<PluginUpdate> {
-        const res = await client.get(`/updates/${updateId}`);
-        return res.data as PluginUpdate;
-    },
-
-    async fetchPlugin(pluginId: number, featuresField: boolean = false, saleField: boolean = true, totalDownloadsField: boolean = true,
-                      authorNameField: boolean = true): Promise<Plugin> {
-        const res = await client.get(`/${pluginId}`, {
-            params: {
-                featuresField,
-                saleField,
-                totalDownloadsField,
-                authorNameField
-            }
-        });
-
-        return new Plugin(res.data);
-    },
-
-    async fetchPluginPermissions(pluginId: number): Promise<PluginPermissions> {
-        const res = await client.get(`/${pluginId}/permissions`);
-        return res.data as PluginPermissions;
-    },
-
-    async fetchUpcomingSales(pluginId: number): Promise<AxiosResponse> {
-        return await client.get(`/${pluginId}/sales`);
-    },
-
-    async editPlugin(pluginId: number, data: Plugin): Promise<AxiosResponse> {
-        return await client.put(`/${pluginId}`, data);
-    },
-
-    async updatePlugin(pluginId: number, data: PluginUpdate): Promise<AxiosResponse> {
-        return await client.post(`/${pluginId}/update`, data, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-    },
-
-    async grantPluginAccess(pluginId: number, userId: number): Promise<AxiosResponse> {
-        return await client.post(`/${pluginId}/access/${userId}`);
-    },
-
-    async revokePluginAccess(pluginId: number, userId: number): Promise<AxiosResponse> {
-        return await client.delete(`/${pluginId}/access/${userId}`);
+    const updates: PluginUpdate[] = [];
+    for (const update of res.data.updates) {
+        updates.push(update as PluginUpdate);
     }
 
-};
+    return {
+        total: data.total,
+        currentPage: data.currentPage,
+        pages: data.pages,
+        updates
+    };
+},
+
+async fetchPluginPurchases(pluginId: number, page: number = 1, perPage: number = 15, query: number | undefined = undefined,
+                           from: Date | undefined = undefined, to: Date | undefined = undefined): Promise<PluginPurchasesResponse> {
+    const res = await client.get(`/${pluginId}/transactions`, {
+        params: {
+            page,
+            perPage,
+            query,
+            from,
+            to
+        }
+    });
+    const data = res.data;
+
+    const purchases: PluginPurchase[] = [];
+    for (const purchase of res.data.transactions) {
+        purchases.push(purchase as PluginPurchase);
+    }
+
+    return {
+        total: data.total,
+        currentPage: data.currentPage,
+        pages: data.pages,
+        purchases
+    };
+},
+
+async fetchPluginUpdate(updateId: number): Promise<PluginUpdate> {
+    const res = await client.get(`/updates/${updateId}`);
+    return res.data as PluginUpdate;
+},*/
+
+export const fetchPlugin = async (pluginId: number, featuresField: boolean = false, saleField: boolean = true, totalDownloadsField: boolean = true,
+                                  authorNameField: boolean = true): Promise<Plugin> => {
+    const res = await client.get(`/${pluginId}`, {
+        params: {
+            featuresField,
+            saleField,
+            totalDownloadsField,
+            authorNameField
+        }
+    });
+
+    return res.data as Plugin;
+}
+
+/*async fetchPluginPermissions(pluginId: number): Promise<PluginPermissions> {
+    const res = await client.get(`/${pluginId}/permissions`);
+    return res.data as PluginPermissions;
+},
+
+async fetchUpcomingSales(pluginId: number): Promise<AxiosResponse> {
+    return await client.get(`/${pluginId}/sales`);
+},
+
+async editPlugin(pluginId: number, data: Plugin): Promise<AxiosResponse> {
+    return await client.put(`/${pluginId}`, data);
+},
+
+async updatePlugin(pluginId: number, data: PluginUpdate): Promise<AxiosResponse> {
+    return await client.post(`/${pluginId}/update`, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+},
+
+async grantPluginAccess(pluginId: number, userId: number): Promise<AxiosResponse> {
+    return await client.post(`/${pluginId}/access/${userId}`);
+},
+
+async revokePluginAccess(pluginId: number, userId: number): Promise<AxiosResponse> {
+    return await client.delete(`/${pluginId}/access/${userId}`);
+}*/

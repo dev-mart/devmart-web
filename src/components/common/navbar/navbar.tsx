@@ -5,15 +5,16 @@ import {NavbarItem} from "@/components/common/navbar/features/navbar-item";
 import {LogoIcon} from "@/components/common/icon/logo-icon";
 import css from "@/components/common/navbar/navbar.module.scss";
 import {NavbarActionButton} from "@/components/common/navbar/features/navbar-action-button";
-import {getServerSession, Session} from "next-auth";
-import {authOptions} from "@/app/api/auth/[...nextauth]/route";
+import {useSessionHook} from "@/hooks/use-session-hook";
 
 interface NavbarProps {
     background?: boolean;
 }
 
-export const Navbar: FC<NavbarProps> = async ({background = false}) => {
-    const session = await getServerSession(authOptions) as Session | null;
+export const Navbar: FC<NavbarProps> = ({background = false}) => {
+    const {session} = useSessionHook();
+
+    console.log(session)
 
     return (
         <header className={classNames({'header-filled': background}, 'w-full z-10 justify-center max-w-screen-xl px-3 md:px-6 lg:px-10')}>
@@ -25,6 +26,7 @@ export const Navbar: FC<NavbarProps> = async ({background = false}) => {
                 <div>
                     <NavbarItem label="Home" href="/" background={background}/>
                     <NavbarItem label="Paste" href="/paste" background={background}/>
+                    <NavbarItem label="Plugins" href="/plugins" background={background}/>
                     <NavbarItem label="Wiki" href="/wiki" background={background}/>
 
                     {session?.user && (

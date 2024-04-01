@@ -1,6 +1,5 @@
 import {FormHooksSubmitMiddleware} from "@/store/hooks/form/store.interface";
 import {LoginFieldName} from "@/components/common/form-rows/login-form-row/login-form.row.enums";
-import {ApiError} from "@/models/rest/ApiError";
 import {useLoginHook} from "@/hooks/use-login-hook";
 
 interface LoginFormSubmitMiddlewareHook {
