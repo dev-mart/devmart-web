@@ -4,12 +4,13 @@ import {GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsTy
 import {getApiPlugins} from "@/helpers/plugins.helper";
 import {PluginListResponse, PluginFilter} from "@/interfaces/plugin.interface";
 import {PluginListLayout} from "@/layouts/plugin-list-layout";
+import {PluginPreview} from "@/components/plugins/plugin-preview/plugin-preview";
 
 interface PluginListPageProps {
     filter: PluginFilter;
     query: string;
     page: number;
-    pluginList: PluginListResponse;
+    pluginList: PluginListResponse | null;
 }
 
 export const getServerSideProps: GetServerSideProps<PluginListPageProps> = async (context: GetServerSidePropsContext) => {
@@ -20,7 +21,12 @@ export const getServerSideProps: GetServerSideProps<PluginListPageProps> = async
     const query = searchParams.get('query') || '';
     const page = parseInt(searchParams.get('page') || '1') - 1;
 
-    const pluginList = await getApiPlugins(filter, query, page);
+    let pluginList;
+    try {
+        pluginList = await getApiPlugins(filter, query, page);
+    } catch (e) {
+        pluginList = null;
+    }
 
     return {
         props: {
@@ -42,13 +48,12 @@ export default function PluginListPage({
         <PluginListLayout>
             <PluginListSidebar/>
 
-            <div>
-                {pluginList && pluginList.content.map(plugin => (
-                    <div key={plugin.id}>
-                        <h2>{plugin.name}</h2>
-                        <p>{plugin.description}</p>
-                    </div>
-                ))}
+            <div className="col-span-12 lg:col-span-9 w-full">
+                <div className="flex gap-y-5 mt-2 flex-col">
+                    {pluginList && pluginList.content.map(plugin => (
+                        <PluginPreview plugin={plugin} key={plugin.id}/>
+                    ))}
+                </div>
             </div>
         </PluginListLayout>
     );
