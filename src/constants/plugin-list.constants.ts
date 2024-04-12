@@ -5,27 +5,34 @@ export interface PluginListFilter {
     name: string;
     label: string;
     icon: IconProp;
+    requiresAuth?: boolean;
+    activeIconColor?: string;
 }
 
 export const PluginListFilters: Record<string, PluginListFilter> = {
     ALL: {
         name: 'all',
         label: 'All',
-        icon: faCompass
-    },
-    PURCHASED: {
-        name: 'purchased',
-        label: 'Purchased',
-        icon: faCartShopping
+        icon: faCompass,
+        activeIconColor: 'text-primary-500'
     },
     PREMIUM: {
         name: 'premium',
         label: 'Premium',
-        icon: faGem
+        icon: faGem,
+        activeIconColor: 'text-blue-500'
     },
     FREE: {
         name: 'free',
         label: 'Free',
-        icon: faBolt
+        icon: faBolt,
+        activeIconColor: 'text-yellow-500'
+    },
+    PURCHASED: {
+        name: 'purchased',
+        label: 'Purchased',
+        icon: faCartShopping,
+        requiresAuth: true,
+        activeIconColor: 'text-primary-500'
     }
 }
