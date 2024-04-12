@@ -87,6 +87,9 @@ const config: Config = {
                     800: '#182265',
                     900: '#0E1338'
                 },
+                gray: {
+                    250: '#ececec',
+                }
             }
         }
     },

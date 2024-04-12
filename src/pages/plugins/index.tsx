@@ -2,9 +2,10 @@ import {PluginListSidebar} from "@/components/common/sidebar/variants/plugin-lis
 import React from "react";
 import {GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType} from "next";
 import {getApiPlugins} from "@/helpers/plugins.helper";
-import {PluginListResponse, PluginFilter} from "@/interfaces/plugin.interface";
+import {PluginFilter, PluginListResponse} from "@/interfaces/plugin.interface";
 import {PluginListLayout} from "@/layouts/plugin-list-layout";
 import {PluginPreview} from "@/components/plugins/plugin-preview/plugin-preview";
+import {PluginSearchbar} from "@/components/plugins/plugin-searchbar/plugin-searchbar";
 
 interface PluginListPageProps {
     filter: PluginFilter;
@@ -49,6 +50,8 @@ export default function PluginListPage({
             <PluginListSidebar/>
 
             <div className="col-span-12 lg:col-span-9 w-full">
+                <PluginSearchbar initialValue={query}/>
+
                 <div className="flex gap-y-5 mt-2 flex-col">
                     {pluginList && pluginList.content.map(plugin => (
                         <PluginPreview plugin={plugin} key={plugin.id}/>
