@@ -45,6 +45,8 @@ export default function PluginListPage({
                                            query,
                                            page
                                        }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    const computedPage = pluginList?.currentPage || page;
+    const computedTotalElements = pluginList?.totalElements || 0;
     return (
         <PluginListLayout>
             <PluginListSidebar/>
@@ -52,11 +54,18 @@ export default function PluginListPage({
             <div className="col-span-12 lg:col-span-9 w-full">
                 <PluginSearchbar initialValue={query}/>
 
+                <div className="w-full col-gap-4 mt-2 text-xl font-bold">
+                    { computedTotalElements } Plugins Found
+                    { computedPage > 1 && ` - Page ${computedPage}`}
+                </div>
+
                 <div className="flex gap-y-5 mt-2 flex-col">
                     {pluginList && pluginList.content.map(plugin => (
                         <PluginPreview plugin={plugin} key={plugin.id}/>
                     ))}
                 </div>
+
+                { /* TODO: Implement Pagination */ }
             </div>
         </PluginListLayout>
     );

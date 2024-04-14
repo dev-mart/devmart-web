@@ -1,6 +1,8 @@
 import {Plugin, PluginFilter, PluginListResponse} from "@/interfaces/plugin.interface";
 import {api} from "@/services/api";
 import {API_PLUGINS_URL} from "@/constants/api";
+import {Values} from "@/store/hooks/form/store.interface";
+import {EditPluginFieldName} from "@/components/common/form-rows/edit-plugin-form-row/edit-plugin-form-row.enums";
 
 export const getApiPlugins = async (
     filter: PluginFilter = PluginFilter.ALL,
@@ -18,6 +20,13 @@ export const getApiPlugins = async (
     });
 
     return res.data as PluginListResponse;
+}
+export const createNewPlugin = async (
+    values: Values<EditPluginFieldName>
+): Promise<Plugin> => {
+    const res = await api.put(API_PLUGINS_URL, values);
+
+    return res.data as Plugin;
 }
 
 export const getPluginLink = (plugin: Plugin) => {
