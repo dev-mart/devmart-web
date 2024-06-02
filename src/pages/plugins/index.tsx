@@ -6,6 +6,8 @@ import {PluginFilter, PluginListResponse} from "@/interfaces/plugin.interface";
 import {PluginListLayout} from "@/layouts/plugin-list-layout";
 import {PluginPreview} from "@/components/plugins/plugin-preview/plugin-preview";
 import {PluginSearchbar} from "@/components/plugins/plugin-searchbar/plugin-searchbar";
+import {SeoMeta} from "@/components/common/seo-meta/SeoMeta";
+import {SeoDescription, SeoTitle} from "@/constants/seo.constants";
 
 interface PluginListPageProps {
     filter: PluginFilter;
@@ -39,6 +41,11 @@ export const getServerSideProps: GetServerSideProps<PluginListPageProps> = async
     }
 }
 
+type Props = {
+    params: { id: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+}
+
 export default function PluginListPage({
                                            pluginList,
                                            filter,
@@ -48,25 +55,32 @@ export default function PluginListPage({
     const computedPage = pluginList?.currentPage || page;
     const computedTotalElements = pluginList?.totalElements || 0;
     return (
-        <PluginListLayout>
-            <PluginListSidebar/>
+        <>
+            <SeoMeta
+                title={SeoTitle.Plugins}
+                description={SeoDescription.Plugins}
+            />
 
-            <div className="col-span-12 lg:col-span-9 w-full">
-                <PluginSearchbar initialValue={query}/>
+            <PluginListLayout>
+                <PluginListSidebar/>
 
-                <div className="w-full col-gap-4 mt-2 text-xl font-bold">
-                    { computedTotalElements } Plugins Found
-                    { computedPage > 1 && ` - Page ${computedPage}`}
+                <div className="col-span-12 lg:col-span-9 w-full">
+                    <PluginSearchbar initialValue={query}/>
+
+                    <div className="w-full col-gap-4 mt-2 text-xl font-bold">
+                        {computedTotalElements} Plugins Found
+                        {computedPage > 1 && ` - Page ${computedPage}`}
+                    </div>
+
+                    <div className="flex gap-y-5 mt-2 flex-col">
+                        {pluginList && pluginList.content.map(plugin => (
+                            <PluginPreview plugin={plugin} key={plugin.id}/>
+                        ))}
+                    </div>
+
+                    { /* TODO: Implement Pagination */}
                 </div>
-
-                <div className="flex gap-y-5 mt-2 flex-col">
-                    {pluginList && pluginList.content.map(plugin => (
-                        <PluginPreview plugin={plugin} key={plugin.id}/>
-                    ))}
-                </div>
-
-                { /* TODO: Implement Pagination */ }
-            </div>
-        </PluginListLayout>
+            </PluginListLayout>
+        </>
     );
 }
