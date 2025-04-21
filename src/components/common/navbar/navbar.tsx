@@ -19,8 +19,9 @@ export const Navbar: FC<NavbarProps> = ({background = false}) => {
     return (
         <header className={classNames({'header-filled': background}, 'w-full z-10 justify-center max-w-screen-xl px-3 md:px-6 lg:px-10')}>
             <nav className="h-20 flex flex-row justify-between items-center">
-                <Link href="/" className="w-56">
-                    <LogoIcon className={classNames(css.headerLogo, background && css.headerLogofillBlack)}/>
+                <Link href="/" className="w-56 plain text-white text-2xl font-bold">
+                    {/*<LogoIcon className={classNames(css.headerLogo, background && css.headerLogofillBlack)}/>*/}
+                    Devmart
                 </Link>
 
                 <div>

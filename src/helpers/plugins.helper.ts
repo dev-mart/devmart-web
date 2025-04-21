@@ -21,6 +21,18 @@ export const getApiPlugins = async (
 
     return res.data as PluginListResponse;
 }
+
+export const getApiPlugin = async (id: number, jwt?: string): Promise<Plugin> => {
+    const res = await api.get(`${API_PLUGINS_URL}/${id}`, {
+        withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${jwt}`
+        }
+    });
+
+    return res.data as Plugin;
+}
+
 export const createNewPlugin = async (
     values: Values<EditPluginFieldName>
 ): Promise<Plugin> => {

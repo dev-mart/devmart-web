@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,7 +5,6 @@
 :root {
   $max-width: 1260px;
   $font-header: 'Roboto', 'Arial', sans-serif;
-  $font-poppins: Poppins, 'Roboto', 'Arial', sans-serif;
   $header-secondary: #4f5660;
   $border-color: rgba(6, 6, 7, .08);
   $border-light: 1px solid $border-color;
@@ -79,10 +75,6 @@
   $acpu-f-bg-hover: #ecececff;
   $acpu-f-color: #000;
   $acpu-red: #993a3a;
-}
-
-h1, h2, h3 {
-  @apply font-poppins;
 }
 
 h1 {

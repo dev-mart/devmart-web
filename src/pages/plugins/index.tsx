@@ -17,12 +17,9 @@ interface PluginListPageProps {
 }
 
 export const getServerSideProps: GetServerSideProps<PluginListPageProps> = async (context: GetServerSidePropsContext) => {
-    const url = context.req.url;
-    const searchParams = new URLSearchParams(url);
-
-    const filter = PluginFilter[searchParams.get('filter')?.toUpperCase() as keyof typeof PluginFilter] || PluginFilter.ALL;
-    const query = searchParams.get('query') || '';
-    const page = parseInt(searchParams.get('page') || '1') - 1;
+    const filter = PluginFilter[(context.query.filter as string)?.toUpperCase() as keyof typeof PluginFilter] || PluginFilter.ALL;
+    const query = (context.query.query as string) || '';
+    const page = parseInt((context.query.page as string) || '1') - 1;
 
     let pluginList;
     try {
@@ -39,11 +36,6 @@ export const getServerSideProps: GetServerSideProps<PluginListPageProps> = async
             pluginList
         }
     }
-}
-
-type Props = {
-    params: { id: string }
-    searchParams: { [key: string]: string | string[] | undefined }
 }
 
 export default function PluginListPage({

@@ -1,7 +1,7 @@
 import type {Config} from 'tailwindcss'
-import generated from '@headlessui/tailwindcss';
+import headlessui from '@headlessui/tailwindcss';
 
-const config: Config = {
+export default {
     content: [
         './node_modules/flowbite-react/**/*.js',
         './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -26,9 +26,9 @@ const config: Config = {
                 22: '5.5rem'
             },
             fontFamily: {
-                roboto: ['Roboto', 'Arial', 'sans-serif'],
+                roboto: ['var(--font-roboto)', 'Arial', 'sans-serif'],
                 mono: ['monospace', 'Arial', 'sans-serif'],
-                poppins: ['Poppins', 'Roboto', 'Arial', 'sans-serif']
+                poppins: ['var(--font-poppins)', 'Roboto', 'Arial', 'sans-serif']
                 // 'sans': ['Nunito', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', "Segoe UI", 'Roboto', "Helvetica Neue", 'Arial', "Noto Sans", 'sans-serif', "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"],
             },
             minWidth: {
@@ -96,7 +96,7 @@ const config: Config = {
     },
     plugins: [
         require('flowbite/plugin'),
-        generated({prefix: 'ui'})
+        headlessui({prefix: 'ui'}),
+        // generated({prefix: 'ui'})
     ]
-}
-export default config
+} satisfies Config
