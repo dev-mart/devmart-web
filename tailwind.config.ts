@@ -13,63 +13,6 @@ export default {
     darkMode: 'class',
     theme: {
         extend: {
-            borderWidth: {
-                3: '3px'
-            },
-            zIndex: {
-                1: '1'
-            },
-            width: {
-                22: '5.5rem'
-            },
-            height: {
-                22: '5.5rem'
-            },
-            fontFamily: {
-                roboto: ['var(--font-roboto)', 'Arial', 'sans-serif'],
-                mono: ['monospace', 'Arial', 'sans-serif'],
-                poppins: ['var(--font-poppins)', 'Roboto', 'Arial', 'sans-serif']
-                // 'sans': ['Nunito', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', "Segoe UI", 'Roboto', "Helvetica Neue", 'Arial', "Noto Sans", 'sans-serif', "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"],
-            },
-            minWidth: {
-                1: '0.25rem',
-                2: '0.5rem',
-                3: '0.75rem',
-                4: '1rem',
-                5: '1.25rem',
-                6: '1.5rem',
-                7: '1.75rem',
-                8: '2rem',
-                9: '2.25rem',
-                10: '2.5rem',
-                11: '2.75rem',
-                12: '3rem',
-                24: '6rem',
-                60: '15rem'
-            },
-            minHeight: {
-                'screen-1/2': '50vh',
-                1: '0.25rem',
-                2: '0.5rem',
-                3: '0.75rem',
-                4: '1rem',
-                5: '1.25rem',
-                6: '1.5rem',
-                7: '1.75rem',
-                8: '2rem',
-                9: '2.25rem',
-                10: '2.5rem',
-                11: '2.75rem',
-                12: '3rem',
-                24: '6rem'
-            },
-            listStyleType: {
-                square: 'square',
-                circle: 'circle'
-            },
-            textDecorationStyle: {
-                none: 'none'
-            },
             colors: {
                 white: '#FFFFFF',
                 black: '#000000',
