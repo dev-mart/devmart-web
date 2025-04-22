@@ -4,12 +4,12 @@ import {SeoDescription, SeoTitle} from "@/constants/seo.constants";
 
 export default function IndexPage() {
     return (
-        <div className="font-poppins h-full w-full">
+        <>
             <SeoMeta
                 title={SeoTitle.Home}
                 description={SeoDescription.Home}
             />
             <LandingPage/>
-        </div>
+        </>
     );
 }

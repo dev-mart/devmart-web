@@ -1,6 +1,7 @@
 import {Head, Html, Main, NextScript} from 'next/document';
 import classNames from "classnames";
 import {poppins, roboto} from '@/styles/fonts';
+import {Footer} from "@/components/features/footer/footer";
 
 export default function Document() {
     return (
@@ -8,6 +9,7 @@ export default function Document() {
             <Head/>
             <body>
             <Main/>
+            <Footer />
             <NextScript/>
             </body>
         </Html>

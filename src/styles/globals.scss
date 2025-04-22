@@ -96,32 +96,22 @@
     $acpu-red: #993a3a;
 }
 
-h1 {
-    font-size: 2rem;
-    line-height: 2.5rem;
-    font-weight: 800;
-}
-
-h2 {
-    font-size: 1.5rem;
-    line-height: 2rem;
-    font-weight: 800;
-}
-
-h3 {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 700;
-}
-
-a:not(.plain) {
-    @apply text-primary font-semibold;
-
-    :hover {
-        @apply underline text-primary-600;
+@layer base {
+    h1 {
+        font-size: 2rem;
+        line-height: 2.5rem;
+        font-weight: 800;
     }
-}
 
-#__next {
-    @apply h-screen;
+    h2 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 800;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 700;
+    }
 }
