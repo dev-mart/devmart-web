@@ -66,17 +66,17 @@ export default function LoginPage() {
                     {error && <ValidationError message={error}/>}
 
                     <div className="flex flex-row mt-2 center justify-between">
-                        <Link className="underline text-sm" href="/reset-password">Forgot your password?</Link>
+                        <Link className="underline text-sm text-theme-500 font-semibold" href="/reset-password">Forgot your password?</Link>
                     </div>
 
                     <div className="flex flex-col items-center justify-end mt-4">
-                        <Button disabled={!fm.isSubmittable} type="submit">
+                        <Button disabled={!fm.isSubmittable} type="submit" fullWidth>
                             {fm.hasBeenSubmitted ? 'Logging you in...' : 'Log in'}
                         </Button>
                     </div>
                     <div className="mt-4 text-center flex gap-2 justify-center items-center">
                         No account yet?
-                        <Link href="/register">Sign up Now!</Link>
+                        <Link href="/register" className="text-theme-500 font-semibold">Sign up Now!</Link>
                     </div>
                 </FormWrapper>
             </AuthCard>

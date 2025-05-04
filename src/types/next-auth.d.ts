@@ -13,6 +13,12 @@ declare module "next-auth" {
         expires: ISODateString;
     }
 
-    interface Session extends DefaultSession {
+    interface Session {
+        user: {
+            id: string;
+            name: string;
+            email: string;
+            token: string;
+        }
     }
 }

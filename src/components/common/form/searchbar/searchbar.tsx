@@ -84,7 +84,7 @@ export const Searchbar: FC<SearchbarProps> = ({
             </div>
             <div
                 className={classNames(
-                    "bg-primary h-full min-h-[48px] aspect-square transition rounded-lg cursor-pointer flex items-center justify-center",
+                    "bg-theme h-full min-h-[48px] aspect-square transition rounded-lg cursor-pointer flex items-center justify-center",
                     {'bg-opacity-50': disabled, 'cursor-not-allowed': isInputEmpty() || disabled}
                 )}
                 onClick={() => submit()}

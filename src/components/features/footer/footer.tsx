@@ -45,7 +45,7 @@ export const Footer: FC = () => {
                             </SocialLink>
                         </div>
                     </FooterSection>
-                    <div></div>
+                    <div className="hidden md:block"></div>
                     <FooterSection title="Services">
                         <ul className="flex flex-col gap-2 text-slate-200 list-none">
                             <li>Web Applications</li>

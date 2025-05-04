@@ -48,10 +48,10 @@ export const LandingPage: FC = () => {
                 title="Devmart"
                 subtitle=" Minecraft plugins, web, builds, and more."
             />
-            <div className="flex flex-col items-center justify-center bg-[#f8fafc] py-8 sm:py-16 md:py-32 px-4 md:px-8">
+            <div className="flex flex-col items-center justify-center bg-[#f8fafc] text-slate-900 py-8 sm:py-16 md:py-32 px-4 md:px-8">
                 <div className="flex flex-col gap-16 max-w-screen-xl">
                     <div className="flex flex-col gap-4 items-center">
-                        <h2 className="text-4xl">Our Services</h2>
+                        <h2 className="text-4xl text-slate-950">Our Services</h2>
                         <p className="max-w-xl text-center">
                             Innovative solutions tailored to your specific needs with cutting-edge technologies
                         </p>
@@ -80,10 +80,10 @@ export const LandingPage: FC = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col items-center justify-center bg-slate-100 py-8 sm:py-16 md:py-32 px-4 md:px-8">
+            <div className="flex flex-col items-center justify-center bg-slate-100 text-slate-900 py-8 sm:py-16 md:py-32 px-4 md:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-screen-xl">
                     <div className="flex flex-col gap-4">
-                        <h2 className="text-4xl mb-2">SkyWarsReloaded</h2>
+                        <h2 className="text-4xl mb-2 text-slate-950">SkyWarsReloaded</h2>
                         <p>Minecraft&#39;s most successful open-source multiplayer plugin with over 650,000 downloads worldwide. SkyWarsReloaded has
                             revolutionized
                             the
@@ -107,7 +107,7 @@ export const LandingPage: FC = () => {
                     </Container>
                 </div>
             </div>
-            <div className="flex flex-col items-center justify-center py-8 sm:py-16 md:py-32 px-4 md:px-8">
+            <div className="flex flex-col items-center justify-center bg-white text-slate-900 py-8 sm:py-16 md:py-32 px-4 md:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-screen-xl">
                     <div className="flex justify-center">
                     <Image src={bringitMock} alt="Bring It! app mock" height={608} className="rounded-xl"/>

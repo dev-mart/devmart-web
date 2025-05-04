@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useRouter} from "next/navigation";
-import AuthService from "@/services/AuthService";
+import {registerUser} from "@/services/AuthService";
 import {Values} from "@/store/hooks/form/store.interface";
 import {AxiosError} from "axios";
 import {RegisterFieldName} from "@/components/common/form-rows/register-form-row/register-form-row.enums";
@@ -15,7 +15,7 @@ export const useRegisterHook = () => {
         try {
             const {username, email, password} = values;
 
-            const response = await AuthService.registerUser({
+            const response = await registerUser({
                 username,
                 email,
                 password,

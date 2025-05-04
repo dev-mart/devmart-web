@@ -14,7 +14,7 @@ export const PluginListFilters: Record<string, PluginListFilter> = {
         name: 'all',
         label: 'All',
         icon: faCompass,
-        activeIconColor: 'text-primary-500'
+        activeIconColor: 'text-theme-500'
     },
     PREMIUM: {
         name: 'premium',
@@ -33,6 +33,6 @@ export const PluginListFilters: Record<string, PluginListFilter> = {
         label: 'Purchased',
         icon: faCartShopping,
         requiresAuth: true,
-        activeIconColor: 'text-primary-500'
+        activeIconColor: 'text-theme-500'
     }
 }

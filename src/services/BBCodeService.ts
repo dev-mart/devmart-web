@@ -165,35 +165,34 @@ const parsers: BBCodeParsers = {
     }
 };
 
-export default {
-    parse(source: string) {
-        for (const [, tag] of Object.entries(parsers)) {
-            const pattern = new RegExp(tag.pattern, tag.pattern.flags + 'i');
-            while (pattern.test(source)) {
-                source = source.replace(pattern, tag.replace);
-            }
-        }
-        return this.replaceBreaks(source);
-    },
 
-    replaceBreaks(source: string) {
-        return source.replaceAll(/(<\/div>)( *)(<br>)( *)(<div)/g, '</div><div')
-            .replaceAll(/(<\/div>)( *)(<br>)( *)(<\/div)/g, '</div></div')
-            .replaceAll(/(<ul>)( *)(<br>)/g, '<ul>')
-            .replaceAll(/(<br>)( *)(<(\/?)ul>)/g, '<$4ul>')
-            .replaceAll(/(<li>)( *)(<br>)/g, '<li>')
-            .replaceAll(/(<br>)( *)(<li>)/g, '<li>')
-            .replaceAll(/(spoiler-container">( *)<br>)/g, 'spoiler-container">')
-            .replaceAll(/(code-container">( *)<br>)/g, 'code-container">')
-            .replaceAll(/(spoiler">( *)<br>)/g, 'spoiler">')
-            .replaceAll(/(class="code">( *)<br>)/g, 'class="code">')
-            .replaceAll(/(<br>( *)<div class="spoiler-content)/g, '<div class="spoiler-content');
-    },
-
-    stripBBCodeTags(source: string) {
-        for (const tag of Object.values(parsers)) {
-            source = source.replaceAll(tag.pattern + 'i', tag.content);
+export const parseBBCode = (source: string) => {
+    for (const [, tag] of Object.entries(parsers)) {
+        const pattern = new RegExp(tag.pattern, tag.pattern.flags + 'i');
+        while (pattern.test(source)) {
+            source = source.replace(pattern, tag.replace);
         }
-        return source;
     }
+    return replaceBreaks(source);
+};
+
+export const replaceBreaks = (source: string) => {
+    return source.replaceAll(/(<\/div>)( *)(<br>)( *)(<div)/g, '</div><div')
+        .replaceAll(/(<\/div>)( *)(<br>)( *)(<\/div)/g, '</div></div')
+        .replaceAll(/(<ul>)( *)(<br>)/g, '<ul>')
+        .replaceAll(/(<br>)( *)(<(\/?)ul>)/g, '<$4ul>')
+        .replaceAll(/(<li>)( *)(<br>)/g, '<li>')
+        .replaceAll(/(<br>)( *)(<li>)/g, '<li>')
+        .replaceAll(/(spoiler-container">( *)<br>)/g, 'spoiler-container">')
+        .replaceAll(/(code-container">( *)<br>)/g, 'code-container">')
+        .replaceAll(/(spoiler">( *)<br>)/g, 'spoiler">')
+        .replaceAll(/(class="code">( *)<br>)/g, 'class="code">')
+        .replaceAll(/(<br>( *)<div class="spoiler-content)/g, '<div class="spoiler-content');
+};
+
+export const stripBBCodeTags = (source: string) => {
+    for (const tag of Object.values(parsers)) {
+        source = source.replaceAll(tag.pattern + 'i', tag.content);
+    }
+    return source;
 };

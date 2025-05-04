@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-spigot: #d8811f;
+    --color-discord: #5865F2;
+
+    --color-theme: #5162D5;
+    --color-theme-50: #E5E7F9;
+    --color-theme-100: #D4D9F5;
+    --color-theme-200: #B4BBED;
+    --color-theme-300: #939DE5;
+    --color-theme-400: #7280DD;
+    --color-theme-500: #5162D5;
+    --color-theme-600: #2E41C0;
+    --color-theme-700: #233292;
+    --color-theme-800: #182265;
+    --color-theme-900: #0E1338;
+
+    --color-gray-250: #ececec;
+}
+
+@layer base {
+    body {
+        @apply dark:bg-gray-900 dark:text-gray-200;
+    }
+
+    hr {
+        @apply my-4 dark:text-gray-700;
+    }
+
+    h1, h2, h3 {
+        @apply dark:text-white;
+    }
+    h1 {
+        font-size: 2rem;
+        line-height: 2.5rem;
+        font-weight: 800;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 800;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        font-weight: 700;
+    }
+}

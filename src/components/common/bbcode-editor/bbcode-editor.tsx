@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import classNames from "classnames";
 import {BBCode} from "@/components/common/bbcode/bbcode";
-import BBCodeService from "@/services/BBCodeService";
+import {parseBBCode} from "@/services/BBCodeService";
 import {Input} from "@/components/common/form/input/input";
 
 interface BBCodeEditorProps {
@@ -22,7 +22,7 @@ export const BBCodeEditor: FC<BBCodeEditorProps> = ({
     const [parsedBBCode, setParsedBBCode] = useState<string>('');
 
     useEffect(() => {
-        setParsedBBCode(BBCodeService.parse(value));
+        setParsedBBCode(parseBBCode(value));
     }, [value]);
 
     return (

@@ -6,7 +6,7 @@ declare type ButtonTheme = 'primary';
 
 const buttonThemes = (className?: string, theme?: ButtonTheme) =>
     classNames(className, 'flex flex-row gap-4 items-center justify-center text-base font-semibold py-2 px-4 rounded-md transition cursor-pointer',
-        theme === 'primary' && 'bg-primary text-white hover:bg-primary-600')
+        theme === 'primary' && 'bg-theme text-white hover:bg-theme-600')
 
 interface ButtonProps extends Partial<ButtonHTMLAttributes<HTMLButtonElement>> {
     onClick?: () => void;
