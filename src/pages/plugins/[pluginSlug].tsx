@@ -1,9 +1,7 @@
 import React from 'react';
-import {GetServerSidePropsContext, InferGetStaticPropsType} from "next";
+import {GetServerSidePropsContext, InferGetServerSidePropsType} from "next";
 import {getApiPlugin} from "@/helpers/plugins.helper";
-import {getSession, useSession} from "next-auth/react";
-import nextAuth, {authOptions} from "@/pages/api/auth/[...nextauth]";
-import {getServerSession} from "next-auth/next";
+import {getSession} from "next-auth/react";
 import {Session} from "next-auth";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -19,12 +17,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
         }
     }
 
-
-    console.log('heyrrrr')
     const session: Session | null = await getSession({req: context.req});
-    console.log('sesssieee', session)
     const token = session?.user.token;
-    console.log('tokenn', token)
 
     try {
         const plugin = await getApiPlugin(pluginId, token);
@@ -43,7 +37,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     }
 }
 
-export default async function PluginPage({plugin}: InferGetStaticPropsType<typeof getServerSideProps>) {
+export default function PluginPage({plugin}: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
         <div>
             <h1>{plugin.title}</h1>

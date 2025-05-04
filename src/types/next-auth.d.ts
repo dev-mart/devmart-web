@@ -13,6 +13,16 @@ declare module "next-auth" {
         expires: ISODateString;
     }
 
+    interface DefaultJWT extends Record<string, unknown> {
+        name: string;
+        email: string;
+        sub: string;
+    }
+    interface JWT extends Record<string, unknown>, DefaultJWT {
+        id: string;
+        token: string;
+    }
+
     interface Session {
         user: {
             id: string;
