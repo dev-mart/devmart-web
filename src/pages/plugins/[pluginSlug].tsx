@@ -3,9 +3,7 @@ import {GetServerSidePropsContext, InferGetServerSidePropsType} from "next";
 import {getApiPlugin} from "@/helpers/plugins.helper";
 import {getSession} from "next-auth/react";
 import {Session} from "next-auth";
-import parseBBCode from "@bbob/html"
 import {createPreset} from "@bbob/preset";
-import {replaceBreaks} from "@/services/BBCodeService";
 import classNames from "classnames";
 import defaultTags from "@/services/BBCodeTags";
 import {BBCode} from "@/components/common/bbcode/bbcode";
@@ -16,7 +14,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     // split the pluginSlug by '.' and get the last element. This is the plugin id.
     // if there is no '.' in the pluginSlug, then the plugin id is the pluginSlug itself.
     const pluginId = parseInt(pluginSlug.split('.').pop() || '');
-    console.log(pluginId)
     if (!pluginId) {
         return {
             notFound: true
@@ -28,7 +25,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     try {
         const plugin = await getApiPlugin(pluginId, token);
-        console.log(plugin)
 
         return {
             props: {

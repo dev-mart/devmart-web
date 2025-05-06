@@ -1,31 +1,17 @@
-import React, { ReactNode } from "react";
-import { render as htmlRender } from "@bbob/html";
+import React, {ReactNode} from "react";
+import {render as htmlRender} from "@bbob/html";
 import core from "@bbob/core";
 
-import {
-    isTagNode,
-    isStringNode,
-    isEOL,
-    TagNode,
-} from "@bbob/plugin-helper";
+import {isEOL, isStringNode, isTagNode, TagNode,} from "@bbob/plugin-helper";
 
-import type {
-    BBobCoreOptions,
-    BBobCoreTagNodeTree,
-    BBobPlugins,
-    TagNodeTree,
-} from "@bbob/types";
-import {replaceBreaks} from "@/services/BBCodeService";
+import type {BBobCoreOptions, BBobCoreTagNodeTree, BBobPlugins, TagNodeTree,} from "@bbob/types";
 import {Code} from "@/components/common/code/code";
 
 function cleanupBBCodeLineBreaks(bbcodeContent: string) {
-    return bbcodeContent
-        // Remove [BR] between div closing tags
-        .replace(/(\[\/[a-z]+])(\s*)(\[BR])(\s*)(\[\/[a-z]+])/gi, '$1$5')
-
+   return bbcodeContent
         // Remove [BR] before or after list tags
-        .replace(/(\[\/?\blist\b[^]]*])(\s*)(\[BR])/gi, '$1')
-        .replace(/(\[BR])(\s*)(\[\/?\blist\b[^]]*])/gi, '$3')
+       .replace(/(\[\/?(list|LIST)[^\]]*])(\s*)(\[BR])/gi, '$1')
+       .replace(/(\[BR])(\s*)(\[\/?(list|LIST)[^\]]*])/gi, '$3')
 
         // Remove [BR] before or after list item tags
         .replace(/(\[\*])(\s*)(\[BR])/gi, '$1')
@@ -57,16 +43,12 @@ const toAST = (
     source: string,
     plugins?: BBobPlugins,
     options?: BBobCoreOptions
-) => {
-    console.log("AST:", replaceLineBreaks(source))
-    return core(plugins).process(replaceLineBreaks(source), {
-        ...options,
-        render: (input) => {
-            const html = htmlRender(input, {stripTags: true});
-            return replaceBreaks(html);
-        },
-    }).tree;
-}
+) => core(plugins).process(replaceLineBreaks(source), {
+    ...options,
+    render: (input) => {
+        return htmlRender(input, {stripTags: true});
+    },
+}).tree;
 
 const isContentEmpty = (content: TagNodeTree) => {
     if (!content) {
@@ -90,7 +72,7 @@ function tagToReactElement(node: TagNode, index: number) {
 
     return React.createElement(
         node.tag,
-        { ...node.attrs, key: index },
+        {...node.attrs, key: index},
         children
     );
 }
@@ -136,5 +118,5 @@ function render(
     return renderToReactNodes(toAST(source, plugins, options));
 }
 
-export { render };
+export {render};
 export default render;
