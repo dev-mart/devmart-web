@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import classNames from "classnames";
+import {parseBBCode} from "@/services/BBCodeService";
 
 interface BBCodeProps {
     source: string;
@@ -10,10 +11,11 @@ export const BBCode: FC<BBCodeProps> = ({
                                             source,
                                             preview
                                         }) => {
+    const parsedSource = parseBBCode(source);
     return (
         <div
             className={classNames(preview && "bbcode-preview", "bbcode markdown")}
-            dangerouslySetInnerHTML={{__html: source}}
+            dangerouslySetInnerHTML={{__html: parsedSource}}
         />
     );
 }

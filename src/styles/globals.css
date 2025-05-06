@@ -50,4 +50,47 @@
         line-height: 1.75rem;
         font-weight: 700;
     }
+
+    .bbcode-preview {
+        @apply text-base;
+
+        a {
+            @apply text-theme-500 dark:text-theme-200 hover:underline;
+        }
+        ol {
+            @apply list-decimal;
+        }
+        ul {
+            @apply list-disc;
+
+            ul {
+                @apply list-[circle];
+            }
+        }
+        ul, ol {
+            @apply my-4 ml-8;
+
+            ul, ol {
+                @apply my-0;
+            }
+        }
+        img, svg, video, canvas, audio, iframe, embed, object {
+            @apply inline;
+        }
+
+        .inline-code {
+            @apply bg-gray-200 dark:bg-gray-700 text-sm px-1 py-0.5 rounded;
+        }
+
+        details {
+            @apply my-2;
+
+            summary {
+                @apply w-fit font-semibold py-2 px-4 rounded-md transition cursor-pointer bg-gray-200 dark:bg-gray-700  hover:bg-gray-300 dark:hover:bg-gray-600 text-slate-900 dark:text-slate-200;
+            }
+            > div {
+                @apply mt-2 bg-gray-200 dark:bg-gray-800 p-2 rounded-md;
+            }
+        }
+    }
 }

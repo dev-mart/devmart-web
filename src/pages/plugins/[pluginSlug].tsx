@@ -3,6 +3,11 @@ import {GetServerSidePropsContext, InferGetServerSidePropsType} from "next";
 import {getApiPlugin} from "@/helpers/plugins.helper";
 import {getSession} from "next-auth/react";
 import {Session} from "next-auth";
+import parseBBCode from "@bbob/html"
+import {createPreset} from "@bbob/preset";
+import {replaceBreaks} from "@/services/BBCodeService";
+import classNames from "classnames";
+import defaultTags from "@/services/BBCodeTags";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
     let pluginSlug = context.params?.pluginSlug as string;
@@ -38,10 +43,40 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 }
 
 export default function PluginPage({plugin}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    // const parser = (tree: BBobCoreTagNodeTree, options: BBobPluginOptions): BBobCoreTagNodeTree => {
+    //     return tree.walk((node: NodeContent) => {
+    //         node
+    //     });
+    // }
+
+
+    const preset = createPreset(defaultTags)
+
+    const replaceBrks = (source: string) => {
+        return source.replaceAll("\n", "<br/>");
+    }
+    const replaceTags = (source: string) => {
+        return source.replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;");
+    }
+
     return (
-        <div>
-            <h1>{plugin.title}</h1>
-            <p>{plugin.description}</p>
+        <div className="flex flex-col max-w-screen-md mx-auto px-4 py-8 gap-8">
+            <div>
+                <h1>{plugin.title}</h1>
+                <p>{plugin.description}</p>
+            </div>
+
+            <hr/>
+
+            {/*<BBCode plugins={[presetReact()]}>*/}
+            {/*    {plugin.body}*/}
+            {/*</BBCode>*/}
+
+            <div className={classNames("bbcode-preview", "bbcode markdown")}>
+                <div
+                    dangerouslySetInnerHTML={{__html: replaceBreaks(replaceBrks(parseBBCode(replaceTags(plugin.body || ''), preset(), {onlyAllowTags: ["*", ...Object.keys(defaultTags)]})))}}/>
+            </div>
         </div>
     )
 }
