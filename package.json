@@ -13,8 +13,6 @@
     "@bbob/html": "^4.2.0",
     "@bbob/plugin-helper": "^4.2.0",
     "@bbob/preset-html5": "^4.2.0",
-    "@bbob/preset-react": "^4.2.0",
-    "@bbob/react": "^4.2.0",
     "@fortawesome/fontawesome-svg-core": "6.5.1",
     "@fortawesome/free-brands-svg-icons": "6.5.1",
     "@fortawesome/free-regular-svg-icons": "6.5.1",

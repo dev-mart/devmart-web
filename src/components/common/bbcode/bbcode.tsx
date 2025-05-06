@@ -1,21 +1,36 @@
-import React, {FC} from 'react';
-import classNames from "classnames";
-import {parseBBCode} from "@/services/BBCodeService";
+import React, {ReactNode} from 'react';
+import {BBobCoreOptions, BBobPlugins} from "@bbob/types";
+import render from "@/helpers/bbcode.renderer.helper";
 
-interface BBCodeProps {
-    source: string;
-    preview: boolean;
-}
+const content = (children: ReactNode, plugins?: BBobPlugins, options?: BBobCoreOptions) =>
+    React.Children.map(children,
+        (child) => {
+            if (typeof child === 'string') {
+                return render(child, plugins, options);
+            }
 
-export const BBCode: FC<BBCodeProps> = ({
-                                            source,
-                                            preview
-                                        }) => {
-    const parsedSource = parseBBCode(source);
-    return (
-        <div
-            className={classNames(preview && "bbcode-preview", "bbcode markdown")}
-            dangerouslySetInnerHTML={{__html: parsedSource}}
-        />
+            return child
+        }
     );
+
+export type BBobReactComponentProps = {
+    children: ReactNode
+    container?: string
+    componentProps?: Record<string, unknown>
+    plugins?: BBobPlugins
+    options?: BBobCoreOptions
 }
+
+export const BBCode = ({
+                           container = 'span',
+                           componentProps = {},
+                           children,
+                           plugins = [],
+                           options = {},
+                       }: BBobReactComponentProps): React.JSX.Element => React.createElement(
+    container,
+    componentProps,
+    content(children, plugins, options),
+);
+
+
