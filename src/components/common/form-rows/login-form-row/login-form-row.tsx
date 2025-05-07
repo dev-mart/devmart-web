@@ -11,7 +11,6 @@ export const LoginFormRow: FC<FormRowProps<LoginFieldName>> = ({
     const username = fm.getProps(LoginFieldName.username);
     const password = fm.getProps(LoginFieldName.password);
 
-
     const usernameInput = (
         <Input
             name={username.name}

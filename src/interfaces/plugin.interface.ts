@@ -10,6 +10,7 @@ export interface Plugin {
     name: string;
     description: string;
     title: string;
+    slug: string;
     body?: string;
     custom: boolean;
     spigotId?: number;
@@ -22,8 +23,8 @@ export interface Plugin {
     bannerUrl?: string;
     donationUrl?: string;
     author: PluginAuthor;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export enum PluginFilter {

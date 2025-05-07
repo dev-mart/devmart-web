@@ -1,42 +1,52 @@
 {
-    "name": "devmart",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint"
-    },
-    "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "6.5.1",
-        "@fortawesome/free-brands-svg-icons": "6.5.1",
-        "@fortawesome/free-regular-svg-icons": "6.5.1",
-        "@fortawesome/free-solid-svg-icons": "6.5.1",
-        "@fortawesome/react-fontawesome": "0.2.0",
-        "@headlessui/react": "1.7.18",
-        "@headlessui/tailwindcss": "0.2.0",
-        "axios": "1.6.7",
-        "classnames": "2.5.1",
-        "flowbite": "2.3.0",
-        "flowbite-react": "^0.6.4",
-        "next": "14.1.0",
-        "next-auth": "^4.24.7",
-        "react": "18.2.0",
-        "react-dom": "18.2.0",
-        "sass": "1.71.0"
-    },
-    "devDependencies": {
-        "@svgr/webpack": "8.1.0",
-        "@types/node": "20.11.19",
-        "@types/react": "18.2.56",
-        "@types/react-dom": "18.2.19",
-        "autoprefixer": "10.4.17",
-        "eslint": "8.56.0",
-        "eslint-config-next": "14.1.0",
-        "mini-css-extract-plugin": "2.8.0",
-        "postcss": "8.4.35",
-        "tailwindcss": "3.4.1",
-        "typescript": "5.3.3"
-    }
+  "name": "devmart",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "flowbite-react patch"
+  },
+  "dependencies": {
+    "@bbob/html": "^4.2.0",
+    "@bbob/plugin-helper": "^4.2.0",
+    "@bbob/preset-html5": "^4.2.0",
+    "@fortawesome/fontawesome-svg-core": "6.5.1",
+    "@fortawesome/free-brands-svg-icons": "6.5.1",
+    "@fortawesome/free-regular-svg-icons": "6.5.1",
+    "@fortawesome/free-solid-svg-icons": "6.5.1",
+    "@fortawesome/react-fontawesome": "0.2.0",
+    "@headlessui/react": "1.7.18",
+    "@headlessui/tailwindcss": "0.2.2",
+    "@tailwindcss/postcss": "^4.1.4",
+    "axios": "1.6.7",
+    "classnames": "2.5.1",
+    "flowbite": "3.1.2",
+    "flowbite-react": "0.11.7",
+    "next": "15.3.1",
+    "next-auth": "4.24.11",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "sass": "1.86.3",
+    "tailwindcss": "^4.1.4"
+  },
+  "devDependencies": {
+    "@bbob/types": "^4.2.0",
+    "@svgr/webpack": "8.1.0",
+    "@types/node": "20.11.19",
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
+    "eslint": "8.56.0",
+    "eslint-config-next": "15.3.1",
+    "mini-css-extract-plugin": "2.9.2",
+    "react-icons": "5.5.0",
+    "typescript": "5.8.3",
+    "webpack": "5.91.0"
+  },
+  "resolutions": {
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2"
+  }
 }

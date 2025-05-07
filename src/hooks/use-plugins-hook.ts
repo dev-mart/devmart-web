@@ -22,15 +22,12 @@ export const usePluginsHook = (
     } = useApiHook<PluginListResponse>();
 
     const getPlugins = useCallback(async (): Promise<PluginListResponse | undefined> => {
-        console.log("Loading plugins...");
-        console.log("Filter: ", filter);
-
         try {
             setStatus(ApiStatus.loading);
 
             const pluginList = await getApiPlugins(filter, query, page, perPage);
-            setData(pluginList);
 
+            setData(pluginList);
             setStatus(ApiStatus.ready);
             return;
         } catch (e) {

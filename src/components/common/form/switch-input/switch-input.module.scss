@@ -19,7 +19,7 @@
   }
 
   input:checked + & {
-    @apply bg-primary;
+    @apply bg-theme;
 
     &:before {
       @apply transform translate-x-6;
@@ -27,7 +27,7 @@
   }
 
   input:focus + & {
-    @apply shadow shadow-primary;
+    @apply shadow shadow-theme;
   }
 }
 

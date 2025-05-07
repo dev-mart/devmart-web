@@ -95,6 +95,10 @@ const isEqual = (equal: string) => (value: string): boolean => {
     return (value || '').trim() === equal;
 }
 
+const isRegexp = (regexp: RegExp) => (value: string): boolean => {
+    return regexp.test(value);
+}
+
 export {
     hasValue,
     minLength,
@@ -106,5 +110,6 @@ export {
     isEmail,
     isDate,
     isUsername,
-    isEqual
+    isEqual,
+    isRegexp
 }

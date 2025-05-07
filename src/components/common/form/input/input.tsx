@@ -7,7 +7,7 @@ import {Label} from "@/components/common/form/label/label";
 
 export class Input extends React.PureComponent<InputProps> {
 
-    input: React.RefObject<HTMLInputElement> = this.props.forwardedRef || React.createRef();
+    input: React.RefObject<HTMLInputElement | null> = this.props.forwardedRef || React.createRef();
 
     componentDidMount() {
         const {focus} = this.props;
@@ -33,17 +33,17 @@ export class Input extends React.PureComponent<InputProps> {
     getClassNames = (): string => {
         const {
             disabled,
-            validationState,
+            validationState = InputValidationState.UNDETERMINED,
             marginTop = true,
             className
         } = this.props;
 
         return classNames(
-            "!rounded-md shadow-sm dark:!shadow-gray-700 focus:ring dark:border-gray-700 focus:ring-opacity-50 w-full",
+            "!rounded-md outline-none focus:ring-3 border w-full px-3 py-2",
             marginTop && 'mt-1',
-            validationState === InputValidationState.INVALID && 'border-red-300 focus:border-red-300 focus:ring-red-200',
-            validationState === InputValidationState.UNDETERMINED && 'border-gray-300 dark:border-gray-700 focus:border-indigo-300 dark:ring-offset-gray-700 focus:ring-indigo-200',
-            validationState === InputValidationState.VALID && 'border-green-300 focus:border-green-300 focus:ring-green-200',
+            validationState === InputValidationState.INVALID && 'border-red-300 focus:ring-red-300/50',
+            validationState === InputValidationState.UNDETERMINED && 'border-gray-300 dark:border-gray-700 focus:ring-theme-500/50',
+            validationState === InputValidationState.VALID && 'border-green-300 focus:ring-green-300/50',
             disabled ? 'bg-gray-100 dark:text-gray-400 dark:bg-gray-700 dark:border-gray-600' : 'bg-white dark:bg-gray-800 dark:text-gray-300',
             className
         );
@@ -78,7 +78,7 @@ export class Input extends React.PureComponent<InputProps> {
                     <Label htmlFor={name} label={label}/>
                 )}
 
-                <div className={classNames('relative', inputContainerClassName)}>
+                <div className={classNames('relative relat', inputContainerClassName)}>
                     <input
                         className={this.getClassNames()}
                         type={type}

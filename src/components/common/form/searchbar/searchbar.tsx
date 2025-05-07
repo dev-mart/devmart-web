@@ -1,10 +1,12 @@
 import React, {FC} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
+import {faCircleXmark, faFilter, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {Input} from "@/components/common/form/input/input";
 
 interface SearchbarProps {
     value: string;
-    onSubmit: () => void;
+    onSubmit: (value: string) => void;
     onChange?: (value: string) => void;
     placeholder?: string;
     disabled?: boolean;
@@ -21,19 +23,22 @@ export const Searchbar: FC<SearchbarProps> = ({
                                                   filterButton = false,
                                                   onFilterClick = () => null
                                               }) => {
-
-    const inputEmpty = value.length === 0;
+    const isInputEmpty = () => value.trim().length === 0;
 
     const submit = (force: boolean = false) => {
         if (!force && disabled) {
             return;
         }
-        onSubmit();
+        onSubmit(value);
     }
 
     const clearInput = () => {
+        if (isInputEmpty()) {
+            return;
+        }
+
         onChange('');
-        submit(true);
+        onSubmit('');
     }
 
     return (
@@ -41,51 +46,54 @@ export const Searchbar: FC<SearchbarProps> = ({
             {filterButton && (
                 <button
                     // TODO: check if this works without ref.
-                    className="flex gap-3 w-fit break-keep min-h-[48px] h-full items-center justify-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                    className="flex gap-3 w-fit break-keep min-h-[48px] px-2 rounded-md items-center justify-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
                     data-dropdown-placement="bottom-start"
                     data-dropdown-toggle="filter-dropdown"
                     onClick={onFilterClick}
                 >
-                    <FontAwesomeIcon icon="filter" className="text-gray-500"/>
+                    <FontAwesomeIcon icon={faFilter} className="text-gray-500"/>
                     Filter
                 </button>
             )}
 
             <div className="relative w-full">
-                <input
-                    className="bg-gray-250 dark:bg-gray-800 rounded-lg border-none px-4 text-base py-3 w-full"
+                <Input
+                    className="rounded-lg border-none px-4 text-base py-3 w-full"
                     value={value}
+                    marginTop={false}
                     placeholder={placeholder}
                     type="text"
                     onInput={e => onChange((e.target as any).value)}
+                    onKeyDown={e => e.key === 'Enter' && submit()}
+                    name="search"
                 />
 
                 <div
                     className={classNames(
-                        "absolute top-1 right-1 h-10 w-10 p-2 bg-gray-250 dark:bg-gray-800",
-                        inputEmpty ? 'cursor-not-allowed' : 'cursor-pointer'
+                        "absolute top-1 right-1 h-10 w-10 p-2 bg-gray-100 dark:bg-gray-800",
+                        isInputEmpty() ? 'cursor-not-allowed' : 'cursor-pointer'
                     )}
                     role="button"
                     onClick={clearInput}
                 >
                     <FontAwesomeIcon
-                        icon="circle-xmark"
+                        icon={faCircleXmark}
                         className={classNames(
                             "h-full w-full transition",
-                            inputEmpty ? 'text-black dark:text-gray-200' : 'text-gray-400'
+                            isInputEmpty() ? 'text-gray-400' : 'text-black dark:text-gray-200'
                         )}
                     />
                 </div>
             </div>
             <div
                 className={classNames(
-                    "bg-primary h-full min-h-[48px] aspect-square transition rounded-lg cursor-pointer flex items-center justify-center",
-                    {'bg-opacity-50': disabled, 'cursor-not-allowed': inputEmpty || disabled}
+                    "bg-theme p-4 transition rounded-lg cursor-pointer flex items-center justify-center",
+                    {'bg-opacity-50': disabled, 'cursor-not-allowed': isInputEmpty() || disabled}
                 )}
                 onClick={() => submit()}
                 role="button"
             >
-                <FontAwesomeIcon icon="magnifying-glass" className="text-white text-2xl"/>
+                <FontAwesomeIcon icon={faMagnifyingGlass} className="text-white text-base"/>
             </div>
         </div>
     );

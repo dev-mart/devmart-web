@@ -3,7 +3,7 @@ import React, {FC} from "react";
 interface FormWrapperProps {
     onSubmit?: () => void;
     className?: string;
-    actionUrl?: (formData: FormData) => void | string;
+    actionUrl?: (formData: FormData) => void;
     children: React.ReactNode;
 }
 

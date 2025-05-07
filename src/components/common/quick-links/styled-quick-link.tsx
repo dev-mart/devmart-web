@@ -31,9 +31,9 @@ export const QuickLink: FC<QuickLinkProps> = ({
             target={external ? '_blank' : '_self'}
         >
             <SimpleCard className={classNames(
-                variant === 'github' ?? css.gc,
-                variant === 'spigotmc' ?? css.sp,
-                variant === 'discord' ?? css.dc,
+                variant === 'github' && css.gc,
+                variant === 'spigotmc' && css.sp,
+                variant === 'discord' && css.dc,
                 css.styledQuickLink
             )}>
                 <div className="flex items-center gap-3">

@@ -1,7 +1,6 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import classNames from "classnames";
 import {BBCode} from "@/components/common/bbcode/bbcode";
-import BBCodeService from "@/services/BBCodeService";
 import {Input} from "@/components/common/form/input/input";
 
 interface BBCodeEditorProps {
@@ -19,11 +18,6 @@ export const BBCodeEditor: FC<BBCodeEditorProps> = ({
                                                     }) => {
 
     const [showParsed, setShowParsed] = useState<boolean>(false);
-    const [parsedBBCode, setParsedBBCode] = useState<string>('');
-
-    useEffect(() => {
-        setParsedBBCode(BBCodeService.parse(value));
-    }, [value]);
 
     return (
         <div className="bbcode-editor-container flex flex-col">
@@ -43,10 +37,9 @@ export const BBCodeEditor: FC<BBCodeEditorProps> = ({
             </div>
 
             {showParsed ? (
-                <BBCode
-                    source={parsedBBCode}
-                    preview
-                />
+                <BBCode>
+                    {value}
+                </BBCode>
             ) : (
                 <Input
                     value={value}

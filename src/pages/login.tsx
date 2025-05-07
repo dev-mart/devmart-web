@@ -1,9 +1,6 @@
 "use client"
 
-import {useLoginFormSubmitMiddleware} from "@/components/common/form-rows/login-form-row/login-form-submit-middleware.hook";
-import {useForm} from "@/store/hooks/form/store.hooks";
 import {LoginFieldName} from "@/components/common/form-rows/login-form-row/login-form.row.enums";
-import * as Validation from "@/helpers/validation.helper";
 import {AuthCard} from "@/components/common/auth-card/auth-card";
 import {Alert} from "flowbite-react";
 import {HiCheckCircle} from "react-icons/hi2";
@@ -19,6 +16,7 @@ import {useSearchParams} from "next/navigation";
 import {AuthLayout} from "@/layouts/auth-layout";
 import {GetServerSidePropsContext} from "next";
 import {checkSession} from "@/helpers/auth.helper";
+import {useLoginForm} from "@/hooks/forms/use-login-form-hook";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
     return await checkSession(context, false, true);
@@ -26,36 +24,15 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
 export default function LoginPage() {
     const searchParams = useSearchParams();
-
-    const {error, afterSubmitMiddleware} = useLoginFormSubmitMiddleware(searchParams.get('redirect') as string);
+    const redirectUri = searchParams.get('redirect') as string || '/';
 
     const {
         fm,
-        eventHandlers: {handleChange, handleBlur, handleSubmit},
-    } = useForm(
-        [LoginFieldName.username, LoginFieldName.password],
-        {
-            [LoginFieldName.username]: {
-                rules: [
-                    {
-                        error: 'Username is required',
-                        validator: Validation.hasValue
-                    }
-                ],
-            },
-            [LoginFieldName.password]: {
-                rules: [
-                    {
-                        error: 'Password is required',
-                        validator: Validation.hasValue
-                    }
-                ],
-            }
-        },
-        {
-            afterSubmitMiddleware
-        }
-    );
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        error
+    } = useLoginForm(redirectUri);
 
     return (
         <AuthLayout>
@@ -89,17 +66,17 @@ export default function LoginPage() {
                     {error && <ValidationError message={error}/>}
 
                     <div className="flex flex-row mt-2 center justify-between">
-                        <Link className="underline text-sm" href="/reset-password">Forgot your password?</Link>
+                        <Link className="underline text-sm text-theme-500 font-semibold" href="/reset-password">Forgot your password?</Link>
                     </div>
 
                     <div className="flex flex-col items-center justify-end mt-4">
-                        <Button disabled={!fm.isSubmittable} type="submit">
+                        <Button disabled={!fm.isSubmittable} type="submit" fullWidth>
                             {fm.hasBeenSubmitted ? 'Logging you in...' : 'Log in'}
                         </Button>
                     </div>
                     <div className="mt-4 text-center flex gap-2 justify-center items-center">
                         No account yet?
-                        <Link href="/register">Sign up Now!</Link>
+                        <Link href="/register" className="text-theme-500 font-semibold">Sign up Now!</Link>
                     </div>
                 </FormWrapper>
             </AuthCard>

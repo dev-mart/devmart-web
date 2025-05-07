@@ -7,7 +7,7 @@ interface StatsProps {
     value: string;
 }
 
-export const Stat: FC<StatsProps> = ({dot = false, small = false, value}) => {
+export const Stat: FC<StatsProps> = ({dot = true, small = false, value}) => {
     return (
         <>
             {dot &&

@@ -11,6 +11,7 @@ interface SidebarItemProps {
     href: string | UrlObject;
     active?: boolean;
     highlight?: boolean;
+    activeIconColor?: string;
 }
 
 export const SidebarItem: FC<SidebarItemProps> = ({
@@ -18,16 +19,17 @@ export const SidebarItem: FC<SidebarItemProps> = ({
                                                       title,
                                                       href,
                                                       active = false,
-                                                      highlight = false
+                                                      highlight = false,
+                                                      activeIconColor
                                                   }) => {
     const rootClasses = classNames(
         {
-            'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600': active,
+            'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600': active,
             'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700': highlight,
             'hover:bg-gray-100 dark:hover:bg-gray-800': !active && !highlight,
             'hover:bg-gray-200 dark:hover:bg-gray-700': !active && highlight
         },
-        'flex flex-row items-center py-3 px-4 my-2 rounded-lg plain lg:mr-3'
+        'flex flex-row items-center py-3 px-4 my-2 rounded-lg plain'
     );
 
     const titleClasses = classNames(
@@ -43,7 +45,10 @@ export const SidebarItem: FC<SidebarItemProps> = ({
             <div className="flex justify-center items-center h-5 w-5 mr-4">
                 <FontAwesomeIcon
                     icon={icon}
-                    className="h-full w-full fill-gray-700"
+                    className={classNames(
+                        "h-full w-full",
+                        active && !!activeIconColor ? activeIconColor : 'text-gray-700'
+                    )}
                 />
             </div>
             <div className={titleClasses}>
