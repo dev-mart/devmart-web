@@ -1,7 +1,8 @@
-import NextAuth, {JWT, Session, User} from "next-auth";
+import NextAuth, {Session, User} from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import {login} from "@/services/AuthService";
 import {AxiosError} from "axios";
+import {JWT} from "next-auth/jwt";
 
 export const authOptions = {
     pages: {
@@ -51,7 +52,7 @@ export const authOptions = {
         })
     ],
     callbacks: {
-        async jwt({token, user}: { token: JWT, user?: User }) {
+        async jwt({token, user}: { token: JWT, user?: User }): Promise<JWT> {
             console.log('token', token);
             console.log('user', user);
 
