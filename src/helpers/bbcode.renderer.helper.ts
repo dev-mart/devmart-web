@@ -8,6 +8,8 @@ import type {BBobCoreOptions, BBobCoreTagNodeTree, BBobPlugins, TagNodeTree,} fr
 import {Code} from "@/components/common/code/code";
 
 function cleanupBBCodeLineBreaks(bbcodeContent: string) {
+    console.log('contenttt', bbcodeContent);
+
    return bbcodeContent
         // Remove [BR] before or after list tags
        .replace(/(\[\/?(list|LIST)[^\]]*])(\s*)(\[BR])/gi, '$1')
@@ -24,7 +26,7 @@ function cleanupBBCodeLineBreaks(bbcodeContent: string) {
         .replace(/(\[BR])(\s*)(\[spoiler[^]]*])/gi, '$3')
 
         // Remove [BR] at the beginning of spoiler content
-        .replace(/(\[spoiler[^]]*])(\s*)(\[BR])*/gi, '$1')
+        .replace(/(\[spoiler[^\]]*])(?:\s*\[BR])+/gi, '$1')
 
         // Remove excessive [BR] tags (more than 2 in a row)
         .replace(/(\[BR]\s*){3,}/gi, '[BR][BR]')
