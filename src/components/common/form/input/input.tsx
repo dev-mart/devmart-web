@@ -33,7 +33,7 @@ export class Input extends React.PureComponent<InputProps> {
     getClassNames = (): string => {
         const {
             disabled,
-            validationState,
+            validationState = InputValidationState.UNDETERMINED,
             marginTop = true,
             className
         } = this.props;

@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import {faCircleXmark, faFilter, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {Input} from "@/components/common/form/input/input";
 
 interface SearchbarProps {
     value: string;
@@ -45,7 +46,7 @@ export const Searchbar: FC<SearchbarProps> = ({
             {filterButton && (
                 <button
                     // TODO: check if this works without ref.
-                    className="flex gap-3 w-fit break-keep min-h-[48px] h-full items-center justify-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                    className="flex gap-3 w-fit break-keep min-h-[48px] px-2 rounded-md items-center justify-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
                     data-dropdown-placement="bottom-start"
                     data-dropdown-toggle="filter-dropdown"
                     onClick={onFilterClick}
@@ -56,13 +57,15 @@ export const Searchbar: FC<SearchbarProps> = ({
             )}
 
             <div className="relative w-full">
-                <input
-                    className="bg-gray-100 dark:bg-gray-800 rounded-lg border-none px-4 text-base py-3 w-full"
+                <Input
+                    className="rounded-lg border-none px-4 text-base py-3 w-full"
                     value={value}
+                    marginTop={false}
                     placeholder={placeholder}
                     type="text"
                     onInput={e => onChange((e.target as any).value)}
                     onKeyDown={e => e.key === 'Enter' && submit()}
+                    name="search"
                 />
 
                 <div
@@ -84,13 +87,13 @@ export const Searchbar: FC<SearchbarProps> = ({
             </div>
             <div
                 className={classNames(
-                    "bg-theme h-full min-h-[48px] aspect-square transition rounded-lg cursor-pointer flex items-center justify-center",
+                    "bg-theme p-4 transition rounded-lg cursor-pointer flex items-center justify-center",
                     {'bg-opacity-50': disabled, 'cursor-not-allowed': isInputEmpty() || disabled}
                 )}
                 onClick={() => submit()}
                 role="button"
             >
-                <FontAwesomeIcon icon={faMagnifyingGlass} className="text-white text-2xl"/>
+                <FontAwesomeIcon icon={faMagnifyingGlass} className="text-white text-base"/>
             </div>
         </div>
     );
