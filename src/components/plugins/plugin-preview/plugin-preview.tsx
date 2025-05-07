@@ -9,6 +9,7 @@ import {diffInDays, formatDateRelatively} from "@/helpers/date.helper";
 import {faCalendarDays} from "@fortawesome/free-solid-svg-icons";
 import {PluginPreviewBanner} from "@/components/plugins/plugin-preview/elements/plugin-preview-banner";
 import Image from "next/image";
+import {ResourceIcon} from "@/components/common/resource-icon/resource-icon";
 
 interface PluginPreviewProps {
     plugin: Plugin;
@@ -18,29 +19,16 @@ export const PluginPreview: FC<PluginPreviewProps> = ({plugin}) => {
     const lastUpdated = new Date(plugin.updatedAt ?? 0);
     const formattedDate = formatDateRelatively(lastUpdated, diffInDays(new Date(), lastUpdated) <= 7);
 
-    const fallbackImage = '/svg/fallback-cover-image.svg';
     const fallbackIcon = '/svg/fallback-cover-icon.svg';
 
     return (
         <Link href={getPluginLink(plugin)} className="plain">
             <div className="gap-x-4 w-full col-gap-4 flex flex-row">
-                <PluginPreviewBanner bannerUrl={plugin.bannerUrl || fallbackImage}/>
-                <Image
-                    src={plugin.logoUrl || fallbackIcon}
-                    height={48}
-                    width={48}
-                    alt="Logo image"
-                    className="w-12 h-12 object-cover rounded-lg border-0 lg:hidden"
-                />
+                <PluginPreviewBanner bannerUrl={plugin.bannerUrl}/>
+                <ResourceIcon size="large" src={plugin.logoUrl} className="lg:hidden" />
                 <div className="h-full lg:min-h-[9rem] flex flex-col">
                     <div className="flex flex-row">
-                        <Image
-                            src={plugin.logoUrl || fallbackIcon}
-                            height={24}
-                            width={24}
-                            alt="Plugin logo"
-                            className="w-6 h-6 rounded-md mr-1.5 hidden lg:block object-cover"
-                        />
+                        <ResourceIcon src={plugin.logoUrl} size="small" className="mr-1.5 hidden lg:block" />
                         <h2 className="text-base font-bold break-words">
                             {plugin.title}
                             {/*{plugin?.version && (*/}

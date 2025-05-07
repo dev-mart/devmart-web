@@ -4,9 +4,20 @@ import {getApiPlugin} from "@/helpers/plugins.helper";
 import {getSession} from "next-auth/react";
 import {Session} from "next-auth";
 import {createPreset} from "@bbob/preset";
-import classNames from "classnames";
 import defaultTags from "@/services/BBCodeTags";
 import {BBCode} from "@/components/common/bbcode/bbcode";
+import {Navbar} from "@/components/common/navbar/navbar";
+import {Grid} from "@/components/common/grid/grid";
+import {ResourceIcon} from "@/components/common/resource-icon/resource-icon";
+import {Stats} from "@/components/common/stats/stats";
+import {Stat} from "@/components/common/stats/stat";
+import {PluginQuickNavigation} from "@/components/plugins/plugin-quick-navigation/plugin-quick-navigation";
+import {Highlight, Highlights} from '@/components/plugins/highlights/highlights';
+import {SiCalendly, SiSpigotmc} from "react-icons/si";
+import {CgCalendar} from "react-icons/cg";
+import {FaCalendarDays} from "react-icons/fa6";
+import {formatDateRelatively} from "@/helpers/date.helper";
+import {FaDownload} from "react-icons/fa";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
     let pluginSlug = context.params?.pluginSlug as string;
@@ -26,6 +37,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     try {
         const plugin = await getApiPlugin(pluginId, token);
 
+        console.log('plugin', plugin);
+
         return {
             props: {
                 plugin
@@ -40,37 +53,59 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 }
 
 export default function PluginPage({plugin}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    // const parser = (tree: BBobCoreTagNodeTree, options: BBobPluginOptions): BBobCoreTagNodeTree => {
-    //     return tree.walk((node: NodeContent) => {
-    //         node
-    //     });
-    // }
-
-
     const preset = createPreset(defaultTags)
 
+    const supportedVersions = plugin.minecraftVersions.length > 0 ? plugin.minecraftVersions : "Not specified.";
+
+    const highlights: Highlight[] = [];
+    highlights.push({
+        icon: (<SiSpigotmc/>),
+        title: "Supported Versions",
+        description: supportedVersions,
+    });
+    highlights.push({
+        icon: (<FaCalendarDays />),
+        title: "Last Updated",
+        description: formatDateRelatively(new Date(plugin.updatedAt ?? plugin.createdAt ?? 0), true)
+    });
+    if (plugin.dependencies.length > 0) {
+        highlights.push({
+            icon: (<FaDownload/>),
+            title: "(Soft) Dependencies",
+            description: plugin.dependencies
+        });
+    }
+
     return (
-        <div className="flex flex-col max-w-screen-md mx-auto px-4 py-8 gap-8">
-            <div>
-                <h1>{plugin.title}</h1>
-                <p>{plugin.description}</p>
-            </div>
+        <div className="w-full flex flex-col items-center m-0 p-0">
+            <Navbar/>
 
-            <hr/>
+            <Grid>
+                <div className="col-span-12 lg:col-span-9 flex flex-col">
+                    <div className="flex flex-row gap-4 mb-4">
+                        <ResourceIcon src={plugin.logoUrl} size="large"/>
+                        <div>
+                            <h1>{plugin.title}</h1>
+                            <p className="text-slate-600 dark:text-slate-300 text-xs lg:text-xl mt-1 mb-3 lg:mb-6">{plugin.description}</p>
 
-            {/*<BBCode plugins={[presetReact()]}>*/}
-            {/*    {plugin.body}*/}
-            {/*</BBCode>*/}
+                            <Stats>
+                                <Stat value="0 Downloads"></Stat>
+                                <Stat value={`By ${plugin.author.username}`}></Stat>
+                            </Stats>
+                        </div>
+                    </div>
 
-            <div className={classNames("bbcode-preview", "bbcode markdown")}>
-                <BBCode plugins={preset()} options={{onlyAllowTags: ["*", ...Object.keys(defaultTags)]}}>
-                    {/*{replaceBreaks(replaceBrks(replaceTags(plugin.body || '')))}*/}
-                    {plugin.body || ''}
-                </BBCode>
+                    <PluginQuickNavigation pluginSlug={plugin.slug} pluginId={plugin.id}/>
 
-                {/*<div*/}
-                {/*    dangerouslySetInnerHTML={{__html: replaceBreaks(replaceBrks(parseBBCode(replaceTags(plugin.body || ''), preset(), {onlyAllowTags: ["*", ...Object.keys(defaultTags)]})))}}/>*/}
-            </div>
+                    <Highlights highlights={highlights}/>
+
+                    <div className="mb-8">
+                        <BBCode plugins={preset()} options={{onlyAllowTags: ["*", ...Object.keys(defaultTags)]}}>
+                            {plugin.body || ''}
+                        </BBCode>
+                    </div>
+                </div>
+            </Grid>
         </div>
     )
 }
