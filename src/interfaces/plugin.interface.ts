@@ -5,6 +5,19 @@ export interface PluginAuthor {
     username: string;
 }
 
+export interface PluginUpdate {
+    id: number;
+    version: string;
+    betaNumber: number;
+    title: string;
+    changelog: string;
+    downloads: number;
+    createdAt: string;
+    fileExtension: string;
+    fileSize: number;
+    displayName: string;
+}
+
 export interface Plugin {
     id: number;
     name: string;
@@ -22,9 +35,11 @@ export interface Plugin {
     logoUrl?: string;
     bannerUrl?: string;
     donationUrl?: string;
+    downloads: number;
     author: PluginAuthor;
     createdAt: Date;
     updatedAt: Date;
+    latestUpdate?: PluginUpdate;
 }
 
 export enum PluginFilter {

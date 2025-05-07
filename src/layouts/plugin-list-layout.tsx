@@ -8,7 +8,7 @@ export const PluginListLayout: FC<ChildrenProp> = ({children}) => {
     return (
         <div className="flex flex-row">
             <div className="w-full flex flex-col items-center m-0 p-0">
-                <Navbar/>
+                <Navbar background />
 
                 <HeaderBackground
                     title="Plugins"

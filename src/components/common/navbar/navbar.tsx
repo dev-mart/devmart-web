@@ -15,8 +15,7 @@ export const Navbar: FC<NavbarProps> = ({background = false}) => {
     return (
         <header className={classNames({'header-filled': background}, 'w-full z-10 justify-center max-w-screen-xl px-3 md:px-6 lg:px-10')}>
             <nav className="flex flex-row justify-between items-center">
-                <Link href="/" className="w-56 plain text-white text-2xl font-bold">
-                    {/*<LogoIcon className={classNames(css.headerLogo, background && css.headerLogofillBlack)}/>*/}
+                <Link href="/" className={classNames("w-56 plain text-2xl font-bold", background ? 'text-white' : 'text-gray-900 dark:text-white')}>
                     Devmart
                 </Link>
 
@@ -31,7 +30,10 @@ export const Navbar: FC<NavbarProps> = ({background = false}) => {
                     )}
                 </div>
 
-                <NavbarActionButton background={background} session={session}/>
+                <NavbarActionButton
+                    background={background}
+                    session={session}
+                />
             </nav>
         </header>
     );

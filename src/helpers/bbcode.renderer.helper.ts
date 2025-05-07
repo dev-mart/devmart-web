@@ -8,8 +8,6 @@ import type {BBobCoreOptions, BBobCoreTagNodeTree, BBobPlugins, TagNodeTree,} fr
 import {Code} from "@/components/common/code/code";
 
 function cleanupBBCodeLineBreaks(bbcodeContent: string) {
-    console.log('contenttt', bbcodeContent);
-
    return bbcodeContent
         // Remove [BR] before or after list tags
        .replace(/(\[\/?(list|LIST)[^\]]*])(\s*)(\[BR])/gi, '$1')

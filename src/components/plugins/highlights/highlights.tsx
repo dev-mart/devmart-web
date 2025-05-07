@@ -17,9 +17,9 @@ interface HighlightsProps {
 
 export const Highlights: FC<HighlightsProps> = ({highlights}) => {
     return (
-        <div className="pt-6 mb-6 border-b border-b-gray-200 dark:border-b-gray-700 flex flex-row gap-8">
+        <div className="py-6 mb-6 border-b border-b-gray-200 dark:border-b-gray-700 flex flex-col md:flex-row gap-4 md:gap-8">
             {highlights.map((highlight) => (
-                <div className="mb-6 lg:max-w-1/2 flex flex-row items-center gap-4" key={highlight.description}>
+                <div className="lg:max-w-1/2 flex flex-row items-center gap-4" key={highlight.description}>
                     <Icon icon={highlight.icon} />
 
                     <div className="flex flex-col justify-center content-center">

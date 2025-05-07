@@ -18,7 +18,9 @@ export const Code: FC<PropsWithChildren<CodeProps>> = ({language, children}) => 
 
     return (
         <div className="bg-gray-100 border-gray-200 dark:bg-gray-950 border overflow-auto dark:border-gray-800 rounded-md my-2">
-            <div className="py-2 px-3 border-b border-gray-800">Code{language && ": "}{language}</div>
+            <div className="py-2 px-3 border-b border-gray-200 dark:border-gray-800">
+                Code{language && ": "}{language}
+            </div>
             <div className="overflow-auto max-w-full max-h-[30rem] px-3 py-1">
                 <table>
                     <tbody>

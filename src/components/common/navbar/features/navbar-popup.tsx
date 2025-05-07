@@ -24,12 +24,12 @@ export const NavbarPopup: FC<NavbarPopupProps> = ({background, session}) => {
             id="user-dropdown"
             className={classNames(
                 "z-50 hidden my-4 text-base list-none divide-y rounded-lg shadow",
-                background ? "bg-gray-700 divide-gray-600 dark:bg-white dark:divide-gray-100" : "bg-white divide-gray-100"
+                background ? "bg-white divide-gray-100" : "bg-gray-700 divide-gray-600 dark:bg-white dark:divide-gray-100"
             )}>
             <div className="px-4 py-3">
                 <span className={classNames(
                     "block text-sm",
-                    background ? "text-gray-100 dark:text-black" : "text-gray-900"
+                    background ? "text-gray-900" : "text-gray-100 dark:text-black"
                 )}>
                     Hi, {session.user?.name}! 👋
                 </span>

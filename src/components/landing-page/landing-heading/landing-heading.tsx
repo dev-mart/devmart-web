@@ -14,7 +14,7 @@ export const LandingHeading: FC<LandingHeadingProps> = ({
         <div className="w-full h-screen bg-pink-700 bg-gradient-to-br from-pink-600 to-purple-950">
             <div className="flex flex-col h-full">
                 <div className="w-full flex flex-col items-center m-0 p-0">
-                    <Navbar/>
+                    <Navbar background />
                 </div>
 
                 <div className="flex flex-col items-center justify-center gap-0 text-center h-full -mt-20">

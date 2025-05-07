@@ -1,4 +1,4 @@
-import React, {FC, HTMLAttributes, ReactNode} from 'react';
+import React, {FC, ReactNode} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import Image from "next/image";
@@ -22,7 +22,7 @@ export const Icon: FC<IconProps> = ({
                                     }) => {
     return (
         <div className={classNames(
-            background && "min-w-10 min-h-10 w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 text-gray-800 dark:text-gray-400 ",
+            background && "min-w-10 min-h-10 w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 ",
             "flex items-center justify-center"
         )}>
             {React.isValidElement(icon) ? (
@@ -36,8 +36,6 @@ export const Icon: FC<IconProps> = ({
                     )}
                 </>
             )}
-
-
         </div>
     );
 }

@@ -18,7 +18,7 @@ export const NavbarItem: FC<NavbarItemProps> = ({
             href={href}
             className={classNames(
                 "font-poppins font-semibold text-base no-underline mx-3 p-4 hover:underline plain",
-                background ? 'text-gray-900 dark:text-white' : 'text-white'
+                background ? 'text-white' : 'text-gray-900 dark:text-white'
             )}
         >
             {label}

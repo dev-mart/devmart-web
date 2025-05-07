@@ -2,11 +2,12 @@ import React, {AnchorHTMLAttributes, ButtonHTMLAttributes, FC} from 'react';
 import classNames from "classnames";
 import Link from "next/link";
 
-declare type ButtonTheme = 'primary';
+declare type ButtonTheme = 'primary' | 'secondary';
 
 const buttonThemes = (className?: string, theme?: ButtonTheme) =>
     classNames(className, 'flex flex-row gap-4 items-center justify-center text-base font-semibold py-2 px-4 rounded-md transition cursor-pointer',
-        theme === 'primary' && 'bg-theme text-white hover:bg-theme-600')
+        theme === 'primary' && 'bg-theme text-white hover:bg-theme-600',
+        theme === 'secondary' && 'bg-slate-200 text-slate-800 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600',)
 
 interface ButtonProps extends Partial<ButtonHTMLAttributes<HTMLButtonElement>> {
     onClick?: () => void;

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@plugin "flowbite-react/plugin/tailwindcss";
+@source "../../.flowbite-react/class-list.json";
 
 @theme {
     --color-white: #FFFFFF;
@@ -19,6 +21,8 @@
     --color-theme-900: #0E1338;
 
     --color-gray-250: #ececec;
+
+    --text-tiny: 0.625rem;
 }
 
 @layer base {
@@ -27,7 +31,7 @@
     }
 
     hr {
-        @apply my-4 dark:text-gray-700;
+        @apply my-4 text-gray-200 dark:text-gray-700;
     }
 
     h1, h2, h3 {
@@ -89,7 +93,7 @@
                 @apply w-fit font-semibold py-2 px-4 rounded-md transition cursor-pointer bg-gray-200 dark:bg-gray-700  hover:bg-gray-300 dark:hover:bg-gray-600 text-slate-900 dark:text-slate-200;
             }
             > div {
-                @apply mt-2 bg-gray-200 dark:bg-gray-800 p-2 rounded-md;
+                @apply mt-2 bg-gray-100 dark:bg-gray-800 p-2 rounded-md;
             }
         }
     }

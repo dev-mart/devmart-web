@@ -25,7 +25,8 @@ export const NavbarActionButton: FC<NavbarActionButtonProps> = ({background = fa
 
     const classes = classNames(
         'text-sm py-2 px-4 transition cursor-pointer relative rounded-full plain select-none',
-        background ? 'bg-gray-900 text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900' : 'bg-white text-gray-900'
+        background ? 'bg-white hover:bg-gray-100 text-gray-900' :
+            'dark:bg-white hover:bg-gray-800 bg-gray-900 dark:hover:bg-gray-100 dark:text-gray-900 text-white',
     );
 
     return (
